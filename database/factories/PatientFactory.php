@@ -22,7 +22,10 @@ class PatientFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->name(),
+            'address' => $this->faker->address(),
+            'phone_number' => $this->faker->phoneNumber(),
+            'dni' => $this->faker->unique()->numerify('##########'),
         ];
     }
 }

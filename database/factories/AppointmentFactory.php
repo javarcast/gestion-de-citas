@@ -22,7 +22,7 @@ class AppointmentFactory extends Factory
     public function definition()
     {
         return [
-            //
+           //
         ];
     }
 }
