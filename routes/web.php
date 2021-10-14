@@ -21,8 +21,8 @@ Route::get('dashboard', [PageController::class, 'dashboard'])
 Route::resource('pacientes', PatientController::class)
     ->middleware('auth:sanctum');
 
-Route::resource('Citas', AppointmentController::class)
+Route::resource('citas', AppointmentController::class)
     ->middleware('auth:sanctum');
 
-Route::resource('Personal', UserController::class)
+Route::resource('usuarios', UserController::class)
     ->middleware('auth:sanctum');
