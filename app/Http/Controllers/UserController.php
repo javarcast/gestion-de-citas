@@ -47,7 +47,7 @@ class UserController extends Controller
             'dni' => 'required',
             'phone_number' => 'required',
             'address' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'rol_id' => 'required|numeric|min:0',
             'password'=> 'confirmed|min:6'
 
@@ -58,7 +58,7 @@ class UserController extends Controller
             $request->password = bcrypt($request->password);
         }
         $user = User::create($request->all());
-        return redirect()->route('usuarios.edit',$user->id);
+        return redirect()->route('usuarios.edit',$user->id)->with('status','Usuario Creado');
     }
 
     /**
@@ -102,7 +102,7 @@ class UserController extends Controller
             'phone_number' => 'required',
             'address' => 'required',
             'email' => 'required|email',
-            'rol_id' => 'required',
+            'rol_id' => 'required|numeric|min:0',
             'password'=> 'confirmed'
 
         ]);
@@ -117,7 +117,7 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
         $user->update($request->all());
-        return redirect()->route('usuarios.index');
+        return redirect()->route('usuarios.index')->with('status','Usuario Actualizado');
     }
 
     /**
@@ -130,6 +130,6 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('usuarios.index');
+        return redirect()->route('usuarios.index')->with('status','Usuario Eliminado');
     }
 }

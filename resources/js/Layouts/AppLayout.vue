@@ -139,6 +139,7 @@
 
             <!-- Page Content -->
             <main>
+                <notify-process v-if="$page.props.flash.status" :status="$page.props.flash.status"></notify-process>
                 <slot></slot>
             </main>
         </div>
@@ -154,6 +155,7 @@
     import JetNavLink from '@/Jetstream/NavLink.vue'
     import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue'
     import { Head, Link } from '@inertiajs/inertia-vue3';
+    import NotifyProcess from '@/Components/NotifyProcess.vue'
 
     export default defineComponent({
         props: {
@@ -168,6 +170,7 @@
             JetNavLink,
             JetResponsiveNavLink,
             Link,
+            NotifyProcess,
         },
 
         data() {
