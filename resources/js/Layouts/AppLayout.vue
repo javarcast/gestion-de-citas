@@ -28,6 +28,11 @@
                                     Usuarios
                                 </jet-nav-link>
                             </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('pacientes.index')" :active="route().current('pacientes.*')">
+                                    Pacientes
+                                </jet-nav-link>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -154,7 +159,6 @@
         props: {
             title: String,
         },
-
         components: {
             Head,
             JetApplicationMark,

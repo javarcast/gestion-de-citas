@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Rol;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -13,9 +14,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::latest()->get();
+        $users = User::latest()->where('name', 'LIKE', "%$request->q%")
+                                ->orWhere('phone_number', 'LIKE', "%$request->q%")
+                                ->orWhere('email', 'LIKE', "%$request->q%")->get();
+
         return Inertia::render('User/Index',compact("users"));
     }
 
@@ -26,7 +30,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Rol::get();
+        return Inertia::render('User/Create', compact('roles'));
     }
 
     /**
@@ -58,9 +63,10 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return Inertia::render('User/Edit', compact('user'));
     }
 
     /**

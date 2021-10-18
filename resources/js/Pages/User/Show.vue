@@ -17,7 +17,9 @@
                     </div>
                     <div class="md:col-span-2 mt-5 md:mt-0">
                         <div class="shadow bg-white md:rounded-md p-4">
-                           <table-details :user="user" />
+                            <table-details :user="user" />
+                            <hr class="my-6">
+                            <Link :href="route('usuarios.index')"> Volver</Link>
                         </div>
                     </div>
                 </div>
