@@ -30,6 +30,7 @@ class User extends Authenticatable
         'dni',
         'address',
         'password',
+        'rol_id'
     ];
 
     /**

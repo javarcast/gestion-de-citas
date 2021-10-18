@@ -42,7 +42,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'dni' => 'required',
+            'phone_number' => 'required',
+            'address' => 'required',
+            'email' => 'required|email',
+            'rol_id' => 'required|numeric|min:0',
+            'password'=> 'confirmed|min:6'
+
+        ]);
+
+
+        if($request->password){
+            $request->password = bcrypt($request->password);
+        }
+        $user = User::create($request->all());
+        return redirect()->route('usuarios.edit',$user->id);
     }
 
     /**
@@ -65,8 +81,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $roles = Rol::get();
         $user = User::findOrFail($id);
-        return Inertia::render('User/Edit', compact('user'));
+        return Inertia::render('User/Edit', compact('user','roles'));
     }
 
     /**
@@ -76,9 +93,31 @@ class UserController extends Controller
      * @param  \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request,  $id)
     {
-        //
+        
+        $request->validate([
+            'name' => 'required',
+            'dni' => 'required',
+            'phone_number' => 'required',
+            'address' => 'required',
+            'email' => 'required|email',
+            'rol_id' => 'required',
+            'password'=> 'confirmed'
+
+        ]);
+
+
+        if($request->password){
+            $request->password = bcrypt($request->password);
+        }else{
+            unset($request['password']);
+            unset($request['password_confirmation']);
+        }
+
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+        return redirect()->route('usuarios.index');
     }
 
     /**
@@ -87,8 +126,10 @@ class UserController extends Controller
      * @param  \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('usuarios.index');
     }
 }
