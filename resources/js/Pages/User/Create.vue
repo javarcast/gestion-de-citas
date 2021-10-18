@@ -18,17 +18,11 @@
                         </div>
                     </div>
                     <div class="md:col-span-2 mt-5 md:mt-0">
-                            <div v-if="errors" class="alert alert-danger" role="alert">
-                                <ul>
-                                    <div v-for="(error, index) in errors" :key="index">
-                                        <li>{{ error }}</li>
-                                    </div>
-                                </ul>
-                            </div>
                         <div class="shadow bg-white md:rounded-md p-4">
+                            <form-errors :errors="errors"></form-errors>
                             <form @submit.prevent="submit">
                                 <label class="block font-medium text-sm text-gray-700">Nombre</label>
-                                <input type="text" v-model="form.name" required class="form-input w-full rounded-md shadow-sm" />
+                                <input :class="{ 'error': isActive, 'text-danger': hasError }" type="text" v-model="form.name" required class="form-input w-full rounded-md shadow-sm" />
                              
                                 <label class="block font-medium text-sm text-gray-700">Nro. Telefonico</label>
                                 <input type="text" v-model="form.phone_number" required class="form-input w-full rounded-md shadow-sm" />
@@ -69,10 +63,12 @@
 <script>
     import AppLayout from '@/Layouts/AppLayout.vue'
     import {Link} from '@inertiajs/inertia-vue3'
+    import FormErrors from '@/Components/FormErrors.vue'
     export default {
         components: {
             AppLayout,
-            Link
+            Link,
+            FormErrors,
         },
         data(){
             return{
@@ -96,7 +92,7 @@
         },
         props:{
             roles: Array,
-            errors: Array
+            errors: Object,
         }
     }
 </script>
