@@ -47,7 +47,7 @@ class UserController extends Controller
             'dni' => 'required',
             'phone_number' => 'required',
             'address' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'rol_id' => 'required|numeric|min:0',
             'password'=> 'confirmed|min:6'
 
