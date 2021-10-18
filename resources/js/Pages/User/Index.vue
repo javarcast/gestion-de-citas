@@ -2,7 +2,7 @@
     <app-layout title="Usuarios">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Usuarios
+               <i class="fas fa-users"></i> Modulo de Usuarios
             </h2>
         </template>
 
@@ -11,12 +11,20 @@
                 <div class="md:grid md:grid-cols-3 md:gap-6">
                     <div class="md:col-span-1">
                         <div class="px-4 sm:px0">
-                            <h3 class="text-lg text-gray-900">Listado de Usuarios</h3>
+                            <h3 class="text-lg text-gray-900"> Listado de Usuarios</h3>
                             <p class="text-sm text-gray-600">Selecciona el Usuario correcto y ejecuta cualquier función (ver, editar o eliminar)</p>
                         </div>
                     </div>
                     <div class="md:col-span-2 mt-5 md:mt-0">
                         <div class="shadow bg-white md:rounded-md p-4">
+                            <div class="flex justify-between">
+                                <input type="text" class="form-input rounded-md shadow-sm" placeholder="Buscar..." v-model="q">
+
+                                <Link :href="route('usuarios.create')" class="bg-blue-500 text-white font-bold p-2 mx-4 rounded"><i class="far fa-user"></i> Crear Usuario</Link>
+
+                            </div>
+                            
+                            <hr class="my-6">
                             <table-list :users="users" />
                         </div>
                     </div>
@@ -41,5 +49,20 @@
         props: {
             users: Array,
         },
+        watch: {
+            /**
+             * 
+             * Se utiliza replace en vez de get para que no actualice la pagina
+             */
+            q: function (value){
+                this.$inertia.replace(this.route('usuarios.index', {q: value}))
+            
+            }
+        },
+        data(){
+            return{
+                q: ''
+            }
+        }
     })
 </script>

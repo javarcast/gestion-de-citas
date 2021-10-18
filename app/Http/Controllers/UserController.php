@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Rol;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -13,9 +14,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::latest()->get();
+        $users = User::latest()->where('name', 'LIKE', "%$request->q%")
+                                ->orWhere('phone_number', 'LIKE', "%$request->q%")
+                                ->orWhere('email', 'LIKE', "%$request->q%")->get();
+
         return Inertia::render('User/Index',compact("users"));
     }
 
@@ -26,7 +30,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Rol::get();
+        return Inertia::render('User/Create', compact('roles'));
     }
 
     /**
@@ -37,7 +42,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'dni' => 'required',
+            'phone_number' => 'required',
+            'address' => 'required',
+            'email' => 'required|email',
+            'rol_id' => 'required|numeric|min:0',
+            'password'=> 'confirmed|min:6'
+
+        ]);
+
+
+        if($request->password){
+            $request->password = bcrypt($request->password);
+        }
+        $user = User::create($request->all());
+        return redirect()->route('usuarios.edit',$user->id);
     }
 
     /**
@@ -58,9 +79,11 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        //
+        $roles = Rol::get();
+        $user = User::findOrFail($id);
+        return Inertia::render('User/Edit', compact('user','roles'));
     }
 
     /**
@@ -70,9 +93,31 @@ class UserController extends Controller
      * @param  \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request,  $id)
     {
-        //
+        
+        $request->validate([
+            'name' => 'required',
+            'dni' => 'required',
+            'phone_number' => 'required',
+            'address' => 'required',
+            'email' => 'required|email',
+            'rol_id' => 'required',
+            'password'=> 'confirmed'
+
+        ]);
+
+
+        if($request->password){
+            $request->password = bcrypt($request->password);
+        }else{
+            unset($request['password']);
+            unset($request['password_confirmation']);
+        }
+
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+        return redirect()->route('usuarios.index');
     }
 
     /**
@@ -81,8 +126,10 @@ class UserController extends Controller
      * @param  \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('usuarios.index');
     }
 }

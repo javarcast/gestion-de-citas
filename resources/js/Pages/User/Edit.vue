@@ -11,19 +11,21 @@
                 <div class="md:grid md:grid-cols-3 md:gap-6">
                     <div class="md:col-span-1">
                         <div class="px-4 sm:px0">
-                            <h3 class="text-lg text-gray-900">Crear un Usuario</h3>
-                            <p class="text-sm text-gray-600">Al Crear el usuario puedes editar</p>
-                             <hr class="my-6">
+                            <h3 class="text-lg text-gray-900">Actualizar Usuario: {{user.name}}</h3>
+                            <p class="text-sm text-gray-600">Si lo actualizas no podras devolver al estado anterior</p>
+                            <hr class="my-6">
                             <Link class="bg-gray-200 hover:bg-blue-700 hover:text-white rounded-md text-black mt-2 py-2 px-4" :href="route('usuarios.index')"> Volver</Link>
                         </div>
                     </div>
                     <div class="md:col-span-2 mt-5 md:mt-0">
+                        <div class="col">
                             <div v-if="errors" class="alert alert-danger" role="alert">
                                 <ul>
                                     <div v-for="(error, index) in errors" :key="index">
                                         <li>{{ error }}</li>
                                     </div>
                                 </ul>
+                            </div>
                             </div>
                         <div class="shadow bg-white md:rounded-md p-4">
                             <form @submit.prevent="submit">
@@ -51,12 +53,12 @@
                                 <input type="email" v-model="form.email" required class="form-input w-full rounded-md shadow-sm" />
                                 
                                 <label class="block font-medium text-sm text-gray-700">Contraseña</label>
-                                <input type="password" v-model="form.password" required class="form-input w-full rounded-md shadow-sm" autocomplete="new-password" />
+                                <input type="password" v-model="form.password"  class="form-input w-full rounded-md shadow-sm" autocomplete="new-password" />
 
                                 <label class="block font-medium text-sm text-gray-700">Confirmar Contraseña</label>
-                                <input type="password" v-model="form.password_confirmation" required class="form-input mb-4 w-full rounded-md shadow-sm" autocomplete="new-password" />
+                                <input type="password" v-model="form.password_confirmation"  class="form-input mb-4 w-full rounded-md shadow-sm" autocomplete="new-password" />
 
-                                <button class="bg-blue-500 hover:bg-blue-700 rounded-md text-white font-bold mt-2 py-2 px-4">Crear</button>
+                                <button class="bg-blue-500 hover:bg-blue-700 rounded-md text-white font-bold mt-2 py-2 px-4">Actualizar</button>
                             </form>
                         </div>
                     </div>
@@ -74,29 +76,30 @@
             AppLayout,
             Link
         },
+        props:{
+            roles: Array,
+            user: Object,
+            errors: Array,
+        },
         data(){
             return{
                 form: {
-                    name: '',
-                    dni: '',
-                    phone_number: '',
-                    address: '',
-                    email: '',
-                    password: '',
-                    password_confirmation: '',
-                    rol_id: -1,
+                    name: this.user.name,
+                    dni: this.user.dni,
+                    phone_number: this.user.phone_number,
+                    address: this.user.address,
+                    email: this.user.email,
+                    rol_id: this.user.rol_id,
+                    password: null,
+                    password_confirmation: null,
 
                 }
             }
         },
         methods:{
             submit(){
-                this.$inertia.post(this.route('usuarios.store'), {...this.form});
+                this.$inertia.put(this.route('usuarios.update',this.user.id), {...this.form});
             }
-        },
-        props:{
-            roles: Array,
-            errors: Array
         }
     }
 </script>
