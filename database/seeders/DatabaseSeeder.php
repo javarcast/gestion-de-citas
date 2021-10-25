@@ -27,6 +27,14 @@ class DatabaseSeeder extends Seeder
             'rol_id' => 1,
             'dni'=> '1',
         ]);
+        User::factory()->create([
+            'email' => 'paola@smileclinic.com',
+            'password' => bcrypt('123456'),
+            'name' => 'Paola',
+            'phone_number' => '123456789',
+            'rol_id' => 2,
+            'dni'=> '2',
+        ]);
 
         User::factory(10)->create();
 
