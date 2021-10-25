@@ -53,10 +53,11 @@ class UserController extends Controller
 
         ]);
 
-
+        $password="";
         if($request->password){
-            $request->password = bcrypt($request->password);
+            $request['password'] = bcrypt($request->password);
         }
+        
         $user = User::create($request->all());
         return redirect()->route('usuarios.edit',$user->id)->with('status','Usuario Creado');
     }
@@ -109,7 +110,7 @@ class UserController extends Controller
 
 
         if($request->password){
-            $request->password = bcrypt($request->password);
+            $request['password'] = bcrypt($request->password);
         }else{
             unset($request['password']);
             unset($request['password_confirmation']);
