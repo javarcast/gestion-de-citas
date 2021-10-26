@@ -6,18 +6,35 @@
             </h2>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="md:grid md:grid-cols-3 md:gap-6">
-                    <div class="md:col-span-1">
-                        <div class="px-4 sm:px0">
-                            <h3 class="text-lg text-gray-900">Actualizar Usuario: {{user.name}}</h3>
-                            <p class="text-sm text-gray-600">Si lo actualizas no podras devolver al estado anterior</p>
-                            <hr class="my-6">
-                            <Link class="bg-gray-200 hover:bg-blue-700 hover:text-white rounded-md text-black mt-2 py-2 px-4" :href="route('usuarios.index')"> Volver</Link>
+        <div class="pb-12 pt-0">
+            <div class="max-w-7xl mx-auto sm:pr-0 lg:pr-0">
+                <div class="md:grid md:grid-cols-5 md:gap-1">
+                     <div class="md:col-span-1 menu">
+                         
+                         <div class="mt-20 flex flex-row justify-center">
+                             <img id="iconoRol" src="/images/call.png" alt="img del rol">
+                             <p class="ml-2">Bienvenido Administrador</p>
                         </div>
+                        <ul class=" flex flex-col mt-5 ps-2">
+                            <li class=" m-3 mt-10">
+                                 <Link :href="route('pacientes.index')" class="text-white p-3 mb-2 sidebar-link">
+                                    <i class="px-2 far fa-address-book text-light fa-lg mr-3"></i> Pacientes
+                                </Link>
+                            </li>
+                            <li class=" m-3">
+                                <a href="#" class=" text-white p-3 mb-2 sidebar-link">
+                                    <i class="px-2 fas fa-envelope-open-text text-light fa-lg mr-3"></i>Citas
+                                </a>
+                            </li>
+                            <li class=" m-3">
+                                <Link :href="route('usuarios.index')" class=" text-white p-3 mb-2 sidebar-link">
+                                    <i class="px-2 fas fa-users text-light fa-lg mr-3"></i>Usuarios
+                                </Link>
+                            </li>
+                        </ul>
+                        
                     </div>
-                    <div class="md:col-span-2 mt-5 md:mt-0">
+                    <div class="md:col-span-4 mt-1">
                         <div class="shadow bg-white md:rounded-md p-4">
                             <form-errors :errors="errors"></form-errors>
                             <form @submit.prevent="submit">
@@ -51,6 +68,7 @@
                                 <input type="password" v-model="form.password_confirmation"  class="form-input mb-4 w-full rounded-md shadow-sm" autocomplete="new-password" />
 
                                 <button class="bg-blue-500 hover:bg-blue-700 rounded-md text-white font-bold mt-2 py-2 px-4">Actualizar</button>
+                                <Link class=" bg-gray-200 w-1/12 hover:bg-blue-700 hover:text-white rounded-md text-black mt-2 ml-2 py-2 px-4" :href="route('usuarios.index')"> Cancelar</Link>
                             </form>
                         </div>
                     </div>

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Patient;
 use Illuminate\Http\Request;
-
+use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 class PatientController extends Controller
 {
     /**
@@ -12,9 +13,17 @@ class PatientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
-        //
+        $patients = DB::table('patients')
+        ->select('id','name','address','phone_number','dni')
+        ->where('name', 'LIKE', "%$request->q%")
+        ->orWhere('dni', 'LIKE', "%$request->q%")
+        ->orWhere('address', 'LIKE', "%$request->q%")
+        ->orWhere('phone_number', 'LIKE', "%$request->q%")
+        ->orderBy('id','ASC')->paginate(11);
+
+        return Inertia::render('Patient/Index',compact("patients"));
     }
 
     /**
@@ -24,7 +33,7 @@ class PatientController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Patient/Create');
     }
 
     /**
@@ -35,7 +44,14 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'dni' => 'required|numeric',
+            'phone_number' => 'required|numeric',
+            'address' => 'required',
+        ]);
+        $patient = Patient::create($request->all());
+        return redirect()->route('pacientes.index');
     }
 
     /**
@@ -44,9 +60,10 @@ class PatientController extends Controller
      * @param  \App\Models\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function show(Patient $patient)
+    public function show($id)
     {
-        //
+        $patient = Patient::findOrFail($id);
+        return Inertia::render('Patient/Show', compact('patient'));
     }
 
     /**
@@ -55,9 +72,10 @@ class PatientController extends Controller
      * @param  \App\Models\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function edit(Patient $patient)
+    public function edit($id)
     {
-        //
+        $patient = Patient::findOrFail($id);
+        return Inertia::render('Patient/Edit', compact('patient'));
     }
 
     /**
@@ -67,9 +85,20 @@ class PatientController extends Controller
      * @param  \App\Models\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Patient $patient)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'dni' => 'required|numeric',
+            'phone_number' => 'required|numeric',
+            'address' => 'required'
+
+        ]);
+
+
+        $patient = Patient::findOrFail($id);
+        $patient->update($request->all());
+        return redirect()->route('pacientes.index');
     }
 
     /**
@@ -78,8 +107,10 @@ class PatientController extends Controller
      * @param  \App\Models\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Patient $patient)
+    public function destroy($id)
     {
-        //
+        $patient = Patient::findOrFail($id);
+        $patient->delete();
+        return redirect()->route('pacientes.index');
     }
 }

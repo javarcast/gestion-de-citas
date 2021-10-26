@@ -1,8 +1,8 @@
 <template>
-    <app-layout title="Crear Usuario">
+    <app-layout title="Crear Paciente">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-               <i class="fas fa-users"></i> Módulo de Usuarios
+               <i class="fas fa-users"></i> Módulo de Pacientes
             </h2>
         </template>
 
@@ -17,7 +17,7 @@
                         </div>
                         <ul class=" flex flex-col mt-5 ps-2">
                             <li class=" m-3 mt-10">
-                                 <Link :href="route('pacientes.index')" class="text-white p-3 mb-2 sidebar-link">
+                                <Link :href="route('pacientes.index')" class="text-white p-3 mb-2 sidebar-link">
                                     <i class="px-2 far fa-address-book text-light fa-lg mr-3"></i> Pacientes
                                 </Link>
                             </li>
@@ -43,31 +43,12 @@
                              
                                 <label class="block font-medium text-sm text-gray-700">Nro. Telefonico</label>
                                 <input type="text" v-model="form.phone_number" required class="form-input w-full rounded-md shadow-sm" />
-
                                 <label class="block font-medium text-sm text-gray-700">DNI</label>
                                 <input type="text" v-model="form.dni" required class="form-input w-full rounded-md shadow-sm" />
-
-                                <label class="block text-left w-full" >
-                                    <span class="text-gray-700">Rol</span>
-                                    <select required v-model="form.rol_id" class="form-select block w-full mt-1">
-                                        <option selected value="-1">Selecciona un Rol</option>
-                                        <option v-for="rol in roles" :key="rol.id" :value="rol.id">
-                                            {{rol.name}}
-                                        </option>
-                                    </select>
-                                </label>
 
                                 <label class="block font-medium text-sm text-gray-700">Dirección</label>
                                 <input type="text" v-model="form.address" required class="form-input w-full rounded-md shadow-sm" />
 
-                                <label class="block font-medium text-sm text-gray-700">Email</label>
-                                <input type="email" v-model="form.email" required class="form-input w-full rounded-md shadow-sm" />
-                                
-                                <label class="block font-medium text-sm text-gray-700">Contraseña</label>
-                                <input type="password" v-model="form.password" required class="form-input w-full rounded-md shadow-sm" autocomplete="new-password" />
-
-                                <label class="block font-medium text-sm text-gray-700">Confirmar Contraseña</label>
-                                <input type="password" v-model="form.password_confirmation" required class="form-input mb-4 w-full rounded-md shadow-sm" autocomplete="new-password" />
 
                                 <button class="bg-blue-500 hover:bg-blue-700 rounded-md text-white font-bold mt-2 py-2 px-4">Crear</button>
                                 <Link class=" bg-gray-200 w-1/12 hover:bg-blue-700 hover:text-white rounded-md text-black mt-2 ml-2 py-2 px-4" :href="route('usuarios.index')"> Cancelar</Link>
@@ -96,22 +77,16 @@
                     name: '',
                     dni: '',
                     phone_number: '',
-                    address: '',
-                    email: '',
-                    password: '',
-                    password_confirmation: '',
-                    rol_id: -1,
-
+                    address: ''
                 }
             }
         },
         methods:{
             submit(){
-                this.$inertia.post(this.route('usuarios.store'), {...this.form});
+                this.$inertia.post(this.route('pacientes.store'), {...this.form});
             }
         },
         props:{
-            roles: Array,
             errors: Object,
         }
     }
