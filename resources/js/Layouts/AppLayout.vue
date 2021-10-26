@@ -138,8 +138,11 @@
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main class="contenedor">
                 <notify-process v-if="$page.props.flash.status" :status="$page.props.flash.status"></notify-process>
+               <!-- <section class="menu">
+                    <h3>saluddksdfjsdfhdf</h3>
+                </section>-->
                 <slot></slot>
             </main>
         </div>

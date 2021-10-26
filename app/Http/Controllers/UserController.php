@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Rol;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -16,10 +17,17 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::latest()->where('name', 'LIKE', "%$request->q%")
-                                ->orWhere('phone_number', 'LIKE', "%$request->q%")
-                                ->orWhere('email', 'LIKE', "%$request->q%")->get();
+    
 
+        $users=DB::table('users')
+        ->select('id','name','address','phone_number','dni','email','password','rol_id')
+        ->where('name', 'LIKE', "%$request->q%")
+        ->orWhere('phone_number', 'LIKE', "%$request->q%")
+        ->orWhere('email', 'LIKE', "%$request->q%")
+        ->orWhere('dni', 'LIKE', "%$request->q%")
+        ->orWhere('rol_id', 'LIKE', "%$request->q%")->paginate(10);
+
+                               
         return Inertia::render('User/Index',compact("users"));
     }
 
@@ -44,8 +52,8 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'dni' => 'required',
-            'phone_number' => 'required',
+            'dni' => 'required|numeric',
+            'phone_number' => 'required|numeric',
             'address' => 'required',
             'email' => 'required|email|unique:users',
             'rol_id' => 'required|numeric|min:0',
@@ -54,12 +62,15 @@ class UserController extends Controller
         ]);
 
         $password="";
+        
         if($request->password){
             $request['password'] = bcrypt($request->password);
         }
         
+
         $user = User::create($request->all());
-        return redirect()->route('usuarios.edit',$user->id)->with('status','Usuario Creado');
+        return redirect()->route('usuarios.index');
+        /*return redirect()->route('usuarios.edit',$user->id)->with('status','Usuario Creado');*/
     }
 
     /**
@@ -99,8 +110,8 @@ class UserController extends Controller
         
         $request->validate([
             'name' => 'required',
-            'dni' => 'required',
-            'phone_number' => 'required',
+            'dni' => 'required|numeric',
+            'phone_number' => 'required|numeric',
             'address' => 'required',
             'email' => 'required|email',
             'rol_id' => 'required|numeric|min:0',
@@ -118,7 +129,8 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
         $user->update($request->all());
-        return redirect()->route('usuarios.index')->with('status','Usuario Actualizado');
+        return redirect()->route('usuarios.index');
+        /*return redirect()->route('usuarios.index')->with('status','Usuario Actualizado');*/
     }
 
     /**
@@ -131,6 +143,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('usuarios.index')->with('status','Usuario Eliminado');
+        return redirect()->route('usuarios.index');
+        /*return redirect()->route('usuarios.index')->with('status','Usuario Eliminado');*/
     }
 }

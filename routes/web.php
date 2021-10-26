@@ -26,3 +26,5 @@ Route::resource('citas', AppointmentController::class)
 
 Route::resource('usuarios', UserController::class)
     ->middleware('auth:sanctum');
+
+    
