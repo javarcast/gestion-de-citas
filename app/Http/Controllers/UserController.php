@@ -63,7 +63,8 @@ class UserController extends Controller
         }
 
         $user = User::create($request->all());
-        return redirect()->route('usuarios.index');
+        $message = "Usuario ".$user->name." ha sido creado"; 
+        return redirect()->route('usuarios.index')->with('status',$message);
         /*return redirect()->route('usuarios.edit',$user->id)->with('status','Usuario Creado');*/
     }
 
@@ -124,8 +125,9 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
         $user->update($request->all());
-        return redirect()->route('usuarios.index');
-        /*return redirect()->route('usuarios.index')->with('status','Usuario Actualizado');*/
+        $message = "Usuario ".$user->name." ha sido Actualizado!!"; 
+        //return redirect()->route('usuarios.index');
+        return redirect()->route('usuarios.index')->with('status',$message);
     }
 
     /**
@@ -137,8 +139,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
+        $message = "Usuario ".$user->name." ha sido Eliminado!!";
         $user->delete();
-        return redirect()->route('usuarios.index');
-        /*return redirect()->route('usuarios.index')->with('status','Usuario Eliminado');*/
+        
+        //return redirect()->route('usuarios.index');
+        return redirect()->route('usuarios.index')->with('status',$message);
     }
 }

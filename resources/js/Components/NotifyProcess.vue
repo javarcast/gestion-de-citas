@@ -1,6 +1,6 @@
 <template>
     <div class="bg-blue-500 text-white text-sm font-bold p-4">
-        <p> {{status}}</p>
+        <p class="w-full"> {{status}}</p>
     </div>
 </template>
 
