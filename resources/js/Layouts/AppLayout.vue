@@ -23,7 +23,7 @@
                                     Inicio
                                 </jet-nav-link>
                             </div>
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div v-if="$page.props.user.rol_id===1" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <jet-nav-link :href="route('usuarios.index')" :active="route().current('usuarios.*')">
                                     Usuarios
                                 </jet-nav-link>
@@ -96,7 +96,7 @@
                         <jet-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                             Inicio
                         </jet-responsive-nav-link>
-                        <jet-nav-link :href="route('usuarios.index')" :active="route().current('usuarios.*')">
+                        <jet-nav-link v-if="$page.props.user.rol_id===1" :href="route('usuarios.index')" :active="route().current('usuarios.*')">
                             Usuarios
                         </jet-nav-link>
                     </div>
