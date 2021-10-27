@@ -39,12 +39,14 @@ import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import TableDetails from "@/Components/TableDetails.vue";
+import DashboardLayout from "@/Layouts/DashboardLayout.vue";
 export default defineComponent({
   components: {
     AppLayout,
     Head,
     TableDetails,
     Link,
+    DashboardLayout,
   },
   props: {
     usershow: Object,

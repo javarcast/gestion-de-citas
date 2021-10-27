@@ -38,12 +38,15 @@ import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import TableList from "@/Components/TableList.vue";
+import DashboardLayout from "@/Layouts/DashboardLayout.vue";
+
 export default defineComponent({
   components: {
     AppLayout,
     TableList,
     Head,
     Link,
+    DashboardLayout
   },
   props: {
     users: Array,

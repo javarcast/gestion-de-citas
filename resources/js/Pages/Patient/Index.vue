@@ -38,6 +38,7 @@ import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import TableListPatient from "@/Components/TableListPatient.vue";
+import DashboardLayout from "@/Layouts/DashboardLayout.vue";
 
 export default defineComponent({
   components: {
@@ -45,6 +46,7 @@ export default defineComponent({
     Head,
     Link,
     TableListPatient,
+    DashboardLayout,
   },
   props: {
     patients: Array,
