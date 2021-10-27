@@ -49,7 +49,8 @@ class PatientController extends Controller
             'address' => 'required',
         ]);
         $patient = Patient::create($request->all());
-        return redirect()->route('pacientes.index');
+        $message = "Paciente ".$patient->name." ha sido creado"; 
+        return redirect()->route('pacientes.index')->with('status',$message);
     }
 
     /**
@@ -96,7 +97,8 @@ class PatientController extends Controller
 
         $patient = Patient::findOrFail($id);
         $patient->update($request->all());
-        return redirect()->route('pacientes.index');
+        $message = "Paciente ".$patient->name." ha sido Actualizado!"; 
+        return redirect()->route('pacientes.index')->with('status',$message);
     }
 
     /**
@@ -108,7 +110,8 @@ class PatientController extends Controller
     public function destroy($id)
     {
         $patient = Patient::findOrFail($id);
+        $message = "Paciente ".$patient->name." ha sido Eliminado!"; 
         $patient->delete();
-        return redirect()->route('pacientes.index');
+        return redirect()->route('pacientes.index')->with('status',$message);
     }
 }

@@ -44,13 +44,14 @@
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import VueApexCharts from "vue3-apexcharts";
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head, Link } from '@inertiajs/inertia-vue3';
 
 export default defineComponent({
   components: {
     AppLayout,
     VueApexCharts,
-    Head
+    Head,
+    Link
     
   },
   props: {
