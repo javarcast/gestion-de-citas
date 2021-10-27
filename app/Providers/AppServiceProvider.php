@@ -33,6 +33,5 @@ class AppServiceProvider extends ServiceProvider
 
         URL::forceScheme('https');
         Paginator::useBootstrap();
-        URL::forceScheme('https');
     }
 }
