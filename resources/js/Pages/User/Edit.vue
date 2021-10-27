@@ -90,18 +90,18 @@
         },
         props:{
             roles: Array,
-            user: Object,
+            usershow: Object,
             errors: Array,
         },
         data(){
             return{
                 form: {
-                    name: this.user.name,
-                    dni: this.user.dni,
-                    phone_number: this.user.phone_number,
-                    address: this.user.address,
-                    email: this.user.email,
-                    rol_id: this.user.rol_id,
+                    name: this.usershow.name,
+                    dni: this.usershow.dni,
+                    phone_number: this.usershow.phone_number,
+                    address: this.usershow.address,
+                    email: this.usershow.email,
+                    rol_id: this.usershow.rol_id,
                     password: null,
                     password_confirmation: null,
 
@@ -110,7 +110,7 @@
         },
         methods:{
             submit(){
-                this.$inertia.put(this.route('usuarios.update',this.user.id), {...this.form});
+                this.$inertia.put(this.route('usuarios.update',this.usershow.id), {...this.form});
             }
         }
     }

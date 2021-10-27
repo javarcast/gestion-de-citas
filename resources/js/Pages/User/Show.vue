@@ -37,7 +37,7 @@
                     <div class="md:col-span-4 mt-1">
                         <div class="shadow bg-white md:rounded-md p-4">
                             <div class="flex flex-col justify-center">
-                                <table-details :user="user" />
+                                <table-details :usershow="usershow" />
                                     <div class="flex justify-center">
                                         <Link class=" bg-gray-200 w-1/12 hover:bg-blue-700 hover:text-white rounded-md text-black mt-2 py-2 px-4" :href="route('usuarios.index')"> Volver</Link>
                                     </div>
@@ -64,7 +64,7 @@
             Link
         },
         props: {
-            user: Object,
+            usershow: Object,
         },
     })
 </script>
