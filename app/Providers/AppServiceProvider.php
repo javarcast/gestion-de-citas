@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\URL;
-
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -31,7 +30,8 @@ class AppServiceProvider extends ServiceProvider
             return ['status' => Session::get('status')];
         });
 
-        URL::forceScheme('https');
+
         Paginator::useBootstrap();
+        URL::forceScheme('https');
     }
 }

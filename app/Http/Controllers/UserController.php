@@ -19,13 +19,9 @@ class UserController extends Controller
     {
     
 
-        $users=DB::table('users')
-        ->select('id','name','address','phone_number','dni','email','password','rol_id')
-        ->where('name', 'LIKE', "%$request->q%")
+        $users = User::where('name', 'LIKE', "%$request->q%")
         ->orWhere('phone_number', 'LIKE', "%$request->q%")
-        ->orWhere('email', 'LIKE', "%$request->q%")
-        ->orWhere('dni', 'LIKE', "%$request->q%")
-        ->orWhere('rol_id', 'LIKE', "%$request->q%")->paginate(10);
+        ->orWhere('email', 'LIKE', "%$request->q%")->paginate(10);
 
                                
         return Inertia::render('User/Index',compact("users"));
@@ -79,8 +75,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        return Inertia::render('User/Show', compact('user'));
+        $usershow = User::findOrFail($id);
+        $usershow['rol'] = Rol::findOrFail($usershow->rol_id);
+        return Inertia::render('User/Show', compact('usershow'));
     }
 
     /**
@@ -92,8 +89,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $roles = Rol::get();
-        $user = User::findOrFail($id);
-        return Inertia::render('User/Edit', compact('user','roles'));
+        $usershow = User::findOrFail($id);
+        return Inertia::render('User/Edit', compact('usershow','roles'));
     }
 
     /**
