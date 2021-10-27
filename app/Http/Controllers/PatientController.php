@@ -15,13 +15,11 @@ class PatientController extends Controller
      */
     public function index(request $request)
     {
-        $patients = DB::table('patients')
-        ->select('id','name','address','phone_number','dni')
-        ->where('name', 'LIKE', "%$request->q%")
-        ->orWhere('dni', 'LIKE', "%$request->q%")
-        ->orWhere('address', 'LIKE', "%$request->q%")
+   
+
+        $patients = Patient::where('name', 'LIKE', "%$request->q%")
         ->orWhere('phone_number', 'LIKE', "%$request->q%")
-        ->orderBy('id','ASC')->paginate(11);
+        ->orWhere('dni', 'LIKE', "%$request->q%")->paginate(11);
 
         return Inertia::render('Patient/Index',compact("patients"));
     }
