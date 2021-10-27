@@ -31,7 +31,7 @@
               <li class="m-3">
                 <a href="#" class="text-white p-3 mb-2 sidebar-link">
                   <i class="px-2 fas fa-users text-light fa-lg mr-3"></i
-                  >Doctores
+                  >Usuarios
                 </a>
               </li>
             </ul>
