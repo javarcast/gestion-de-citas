@@ -131,11 +131,13 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import FormErrors from "@/Components/FormErrors.vue";
+import DashboardLayout from "@/Layouts/DashboardLayout.vue";
 export default {
   components: {
     AppLayout,
     Link,
     FormErrors,
+    DashboardLayout,
   },
   props: {
     roles: Array,

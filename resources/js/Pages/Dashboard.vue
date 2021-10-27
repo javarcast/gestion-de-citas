@@ -1,5 +1,5 @@
 <template>
-  <app-layout title="Dashboard">
+ <app-layout title="Dashboard">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         Dashboard
@@ -67,12 +67,13 @@
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import VueApexCharts from "vue3-apexcharts";
-import DashboardLayout from "@Layouts/DashboardLayout.vue";
+import DashboardLayout from "@/Layouts/DashboardLayout.vue";
 
 export default defineComponent({
   components: {
     AppLayout,
     VueApexCharts,
+    DashboardLayout
   },
   props: {
     nPatients: Number,

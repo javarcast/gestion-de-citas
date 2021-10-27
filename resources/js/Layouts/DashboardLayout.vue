@@ -1,9 +1,6 @@
 <template>
-  <app-layout title="Dashboard">
-     <Head :title="title" />
-    </template>
-    <div class="pb-12 pt-0 ">
-      <div class="max-w-7xl mx-auto sm:pr-0 lg:px-0">
+    <div class="pb-12 pt-0 w-full">
+      <div class="max-w-full mx-auto sm:pr-0 lg:px-0">
         <div class="lg:grid lg:grid-cols-5 lg:gap-2">
           <div class="md:col-span-1 menu menuDashboard">
             <div class="mt-20 flex flex-row justify-center">
@@ -41,7 +38,6 @@
         </div>
       </div>
     </div>
-  </app-layout>
 </template>
 
 <script>
