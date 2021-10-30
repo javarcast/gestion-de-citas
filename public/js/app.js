@@ -20910,7 +20910,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     totalAmount: function totalAmount() {
       this.total = this.treatmentsSelected.reduce(function (acum, treatment) {
-        return acum + treatment.price;
+        return parseFloat(acum) + treatment.price;
       }, 0);
       return this.total;
     }
