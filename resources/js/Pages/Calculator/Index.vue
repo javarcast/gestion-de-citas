@@ -64,8 +64,10 @@ export default defineComponent({
       return this.treatmentsSelected;
     },
     totalAmount(){
-      this.total = this.treatmentsSelected.reduce((acum,treatment) => parseFloat(acum) + treatment.price,0);
-      return this.total;
+      this.treatmentsSelected.forEach(treatment=>{
+          this.total += treatment.price;
+      })
+      return parseInt(this.total);
     }
   }
   

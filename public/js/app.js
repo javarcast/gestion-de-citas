@@ -20909,10 +20909,12 @@ __webpack_require__.r(__webpack_exports__);
       return this.treatmentsSelected;
     },
     totalAmount: function totalAmount() {
-      this.total = this.treatmentsSelected.reduce(function (acum, treatment) {
-        return parseFloat(acum) + treatment.price;
-      }, 0);
-      return this.total;
+      var _this = this;
+
+      this.treatmentsSelected.forEach(function (treatment) {
+        _this.total += treatment.price;
+      });
+      return parseInt(this.total);
     }
   }
 }));
