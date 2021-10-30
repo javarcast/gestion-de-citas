@@ -44,8 +44,8 @@ class PatientController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'dni' => 'required|numeric',
-            'phone_number' => 'required|numeric',
+            'dni' => 'required|numeric|unique:patients',
+            'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)\.]*)$/',
             'address' => 'required',
         ]);
         $patient = Patient::create($request->all());
@@ -86,10 +86,11 @@ class PatientController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $patient = Patient::findOrFail($id);
         $request->validate([
             'name' => 'required',
-            'dni' => 'required|numeric',
-            'phone_number' => 'required|numeric',
+            'dni' => 'required|numeric| unique:patients,dni,'.$patient->id,
+            'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)\.]*)$/',
             'address' => 'required'
 
         ]);
