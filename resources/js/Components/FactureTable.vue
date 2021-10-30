@@ -44,10 +44,10 @@
                     </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-500">${{treatment.price}}</div>
+                  <div class="text-sm text-gray-500">${{ treatment.price}}</div>
                 </td>
               </tr>
-              
+
             </tbody>
             <tfoot class="bg-gray-50">
                 <tr>
@@ -72,7 +72,7 @@
                     uppercase
                     tracking-wider
                     w-9/12
-                  ">${{total}}</td>
+                  ">${{ total}}</td>
                 </tr>
             </tfoot>   
           </table>
