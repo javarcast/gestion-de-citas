@@ -11,7 +11,6 @@
         <link rel="icon" href="images/favicon.ico"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0-2/css/all.min.css" integrity="sha512-61a6zi50gYXGgd/n9+ZT2/RKnXr6lkRoWlS88AjFdoUHaIDnyBAcoE0Vs/QDU3lK3nCcUowNDqmQ8WaV0yT4qw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- Styles -->
-        
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
 
