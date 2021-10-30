@@ -47,6 +47,7 @@
                   <div class="text-sm text-gray-500">${{treatment.price}}</div>
                 </td>
               </tr>
+              
             </tbody>
             <tfoot class="bg-gray-50">
                 <tr>
