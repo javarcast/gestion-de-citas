@@ -71,7 +71,7 @@
                     uppercase
                     tracking-wider
                     w-9/12
-                  ">{{priceDolar(total)}}</td>
+                  ">${{total}}</td>
                 </tr>
             </tfoot>   
           </table>
@@ -84,14 +84,6 @@ export default defineComponent({
     props:{
         treatmentsSelected: Array,
         total: Number
-    },
-    methods:{
-        priceDolar(value){
-            if(!value){
-                return '$ 0'
-            }
-            return '$' + value;
-        }
     }
 });
 </script>

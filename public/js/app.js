@@ -19212,15 +19212,6 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     treatmentsSelected: Array,
     total: Number
-  },
-  methods: {
-    priceDolar: function priceDolar(value) {
-      if (!value) {
-        return '$ 0';
-      }
-
-      return numeral__WEBPACK_IMPORTED_MODULE_1___default()(value).format('($) 0.00a');
-    }
   }
 }));
 
@@ -22028,7 +22019,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     )])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tfoot", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.priceDolar(_ctx.total)), 1
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tfoot", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_11, "$" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.total), 1
   /* TEXT */
   )])])]);
 }
@@ -22099,7 +22090,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.sendEmitClick && $options.sendEmitClick.apply($options, arguments);
     }),
-    "class": "text-red-500 w-6 h-6 mr-2 focus:ring-red-400 focus:ring-opacity-25 border border-gray-300 rounded",
+    "class": "text-blue-900 w-6 h-6 mr-2 focus:ring-grenn-300 focus:ring-opacity-25 border border-gray-300 rounded",
     type: "checkbox"
   })]);
 }
