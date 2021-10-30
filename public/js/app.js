@@ -20911,8 +20911,9 @@ __webpack_require__.r(__webpack_exports__);
     totalAmount: function totalAmount() {
       var _this = this;
 
+      this.total = 0;
       this.treatmentsSelected.forEach(function (treatment) {
-        _this.total += treatment.price;
+        _this.total += parseInt(treatment.price);
       });
       return parseInt(this.total);
     }
