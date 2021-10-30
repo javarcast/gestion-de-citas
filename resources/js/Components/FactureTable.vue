@@ -44,7 +44,7 @@
                     </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-500">{{priceDolar(treatment.price) }}</div>
+                  <div class="text-sm text-gray-500">${{treatment.price}}</div>
                 </td>
               </tr>
             </tbody>
@@ -79,7 +79,6 @@
 
 <script>
 import { defineComponent } from "vue";
-import numeral from 'numeral'
 export default defineComponent({
     props:{
         treatmentsSelected: Array,
