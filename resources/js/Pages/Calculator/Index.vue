@@ -64,7 +64,7 @@ export default defineComponent({
       return this.treatmentsSelected;
     },
     totalAmount(){
-      this.total = this.treatmentsSelected.reduce((acum,treatment) => acum + treatment.price,0);
+      this.total = this.treatmentsSelected.reduce((acum,treatment) => parseFloat(acum) + treatment.price,0);
       return this.total;
     }
   }
