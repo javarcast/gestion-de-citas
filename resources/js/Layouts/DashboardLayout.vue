@@ -33,6 +33,14 @@
                 <i class="px-2 fas fa-users text-light fa-lg mr-3"></i>Usuarios
               </Link>
             </li>
+            <li class="m-3">
+              <Link
+                :href="route('calculadora')"
+                class="text-white p-3 mb-2 sidebar-link"
+              >
+                <i class="px-2 fas fa-calculator text-light fa-lg mr-3"></i>Calculadora
+              </Link>
+            </li>
           </ul>
         </div>
         <div class="md:col-span-4 mt-1">
