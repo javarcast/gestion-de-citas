@@ -64,8 +64,9 @@ export default defineComponent({
       return this.treatmentsSelected;
     },
     totalAmount(){
+      this.total = 0;
       this.treatmentsSelected.forEach(treatment=>{
-          this.total += treatment.price;
+          this.total += parseInt(treatment.price);
       })
       return parseInt(this.total);
     }
