@@ -81,6 +81,7 @@
               class="form-input w-full rounded-md shadow-sm"
               autocomplete="new-password"
             />
+            <span class="text-xs text-gray-400">La contraseña debe tener 6 caracteres</span>
 
             <label class="block font-medium text-sm text-gray-700"
               >Confirmar Contraseña</label
@@ -92,7 +93,6 @@
               class="form-input mb-4 w-full rounded-md shadow-sm"
               autocomplete="new-password"
             />
-
             <button
               class="
                 bg-blue-500
