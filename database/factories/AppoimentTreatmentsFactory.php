@@ -22,7 +22,7 @@ class AppoimentTreatmentsFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'amount' => $this->faker->numberBetween($min = 40, $max = 2000),
         ];
     }
 }

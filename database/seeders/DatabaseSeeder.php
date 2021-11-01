@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Treatment;
 use App\Models\Patient;
+use App\Models\Appointment;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -39,6 +40,7 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
 
         Patient::factory(50)->create();
+        /*Appointment::factory(2)->create();*/
         $this->call([TreatmentSeeder::class]);
     }
 }
