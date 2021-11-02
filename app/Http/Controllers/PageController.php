@@ -21,7 +21,7 @@ class PageController extends Controller
         $nPatients = Patient::count();
         $nDentists = User::Where('rol_id', '=', "2")
         ->count();
-        $aTs = AppoimentTreatments::groupBy('treatment_id')
+        $aTs = AppoimentTreatments::groupBy('appoiment_treatments.treatment_id')
                 ->selectRaw('count(appoiment_treatments.id) as number_of_treatments, treatments.name')
                 ->join('treatments','treatments.id', '=', 'appoiment_treatments.treatment_id')
                 ->join('appointments','appointments.id','=', 'appoiment_treatments.appointment_id')
