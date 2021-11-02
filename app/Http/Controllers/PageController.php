@@ -7,16 +7,37 @@ use Inertia\Inertia;
 use App\Models\Patient;
 use App\Models\User;
 use App\Models\Treatment;
+use App\Models\AppoimentTreatments;
+use Carbon\Carbon;
+
 use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
-    public function dashboard(){
+    public function dashboard(Request $request){
 
+        $initDate = ($request->dateStart)?$request->dateStart:Carbon::createFromFormat('m/d/Y', '01/01/2021')->format('Y-m-d');
+        $endDate = ($request->dateEnd)?$request->dateEnd:Carbon::now()->format('Y-m-d');
         $nPatients = Patient::count();
         $nDentists = User::Where('rol_id', '=', "2")
         ->count();
-        return Inertia::render('Dashboard',compact("nPatients","nDentists"));
+        $aTs = AppoimentTreatments::groupBy('treatment_id')
+                ->selectRaw('count(appoiment_treatments.id) as number_of_treatments, treatments.name')
+                ->join('treatments','treatments.id', '=', 'appoiment_treatments.treatment_id')
+                ->join('appointments','appointments.id','=', 'appoiment_treatments.appointment_id')
+                ->whereBetween('appointments.date',[$initDate,$endDate])
+                ->get();
+        $st1n= [];
+        $st1v =[];
+
+       //return "<code>".$aTs."</code>";
+        foreach ($aTs as $key => $aT) {
+            array_push($st1v,$aT->number_of_treatments);
+            array_push($st1n,$aT->name);
+        }
+
+        //return $st1n;
+        return Inertia::render('Dashboard',compact("nPatients","nDentists","st1n","st1v","initDate", "endDate"));
 
     }
 

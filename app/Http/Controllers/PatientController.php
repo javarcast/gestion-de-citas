@@ -86,6 +86,7 @@ class PatientController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $patient = Patient::findOrFail($id);
         $request->validate([
             'name' => 'required',
             'dni' => 'required|numeric',
