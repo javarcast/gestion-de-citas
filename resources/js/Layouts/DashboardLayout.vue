@@ -18,12 +18,15 @@
               </Link>
             </li>
             <li class="m-3">
-              <a href="#" class="text-white p-3 mb-2 sidebar-link">
+              <Link
+                :href="route('citas.index')"
+                class="text-white p-3 mb-2 sidebar-link"
+              >
                 <i
-                  class="px-2 fas fa-envelope-open-text text-light fa-lg mr-3"
+                  class="px-2 fas fa-notes-medical text-light fa-lg mr-3"
                 ></i
                 >Citas
-              </a>
+              </Link>
             </li>
             <li class="m-3">
               <Link
@@ -38,7 +41,8 @@
                 :href="route('calculadora')"
                 class="text-white p-3 mb-2 sidebar-link"
               >
-                <i class="px-2 fas fa-calculator text-light fa-lg mr-3"></i>Calculadora
+                <i class="px-2 fas fa-calculator text-light fa-lg mr-3"></i
+                >Calculadora
               </Link>
             </li>
           </ul>

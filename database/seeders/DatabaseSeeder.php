@@ -5,7 +5,9 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Treatment;
 use App\Models\Patient;
+use App\Models\Appointment;
 use Illuminate\Database\Seeder;
+use App\Models\AppoimentTreatments;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,8 +20,9 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        $this->call([RolSeeder::class]);
-        User::factory()->create([
+       // $this->call([RolSeeder::class]);
+        $this->call([StatusSeeder::class]);
+        /*User::factory()->create([
             'email' => 'admin@smileclinic.com',
             'password' => bcrypt('123456'),
             'name' => 'Smile Clinic',
@@ -35,10 +38,38 @@ class DatabaseSeeder extends Seeder
             'rol_id' => 2,
             'dni'=> '2',
         ]);
+        $this->call([TreatmentSeeder::class]);
 
         User::factory(10)->create();
 
         Patient::factory(50)->create();
-        $this->call([TreatmentSeeder::class]);
+*/
+        $appointments = Appointment::factory(50)->create();
+
+        foreach ($appointments as $key => $appointment) {
+            $n=rand(1,3);
+            $array= [];
+            $count =0;
+            while($n>$count){
+
+                $n2 = Treatment::all()->random()->id;
+                if(!in_array($n2,$array)){
+                    array_push($array,$n2);
+                    $count++;
+                }
+            }
+            foreach ($array as $key => $item) {
+                $treatment = Treatment::findOrFail($item);
+                AppoimentTreatments::factory()->create([
+                    'treatment_id' => $treatment->id,
+                    'appointment_id' => $appointment->id,
+                    'amount'=> $treatment->price
+                ]);
+            }
+        }
+
+
+
+
     }
 }

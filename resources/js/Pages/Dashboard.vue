@@ -1,5 +1,5 @@
 <template>
- <app-layout title="Dashboard">
+  <app-layout title="Dashboard">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         Dashboard
@@ -30,34 +30,58 @@
         </div>
       </div>
       <div class="charts">
-        <div class="charts__left">
-          <div class="charts__left__title flex items-center justify-between">
-            <div>
-              <h1>Tratamientos Solicitados</h1>
-              <p>Tratamientos más Solicitados</p>
+        <div >
+          <div class="flex flex-wrap justify-between items-center">
+            <div class="block md:w-2/5 mb-2">
+              <span class="text-xs text-gray-400"> Fecha Inicio</span>
+              <input
+                :max="dateEnd"
+                type="date"
+                class="form-input rounded-md shadow-sm"
+                v-model="dateStart"
+              />
             </div>
-          </div>
-          <apexchart
-            width="500"
-            type="bar"
-            :options="options1"
-            :series="series1"
-          ></apexchart>
-        </div>
-        <div class="charts__right">
-          <div class="charts__right__title flex items-center justify-between">
-            <div>
-              <h1>Citas Por Día</h1>
-              <p>Resumen Estadístico de Citas</p>
+            <div class="block md:w-2/5 mb-2">
+              <span class="text-xs text-gray-400"> Fecha Fin</span>
+              <input
+                type="date"
+                class="form-input rounded-md shadow-sm"
+                v-model="dateEnd"
+              />
+              
             </div>
+            <button @click="searchDate" class="bg-blue-500
+                hover:bg-blue-700
+                md:h-1/2
+                rounded-md
+                text-white
+                font-bold
+                mt-4
+                py-2
+                mr-4
+                px-4"><i class="fas fa-search"></i></button>
           </div>
-          <apexchart
-            width="400"
-            type="area"
-            :options="options2"
-            :series="series2"
-          ></apexchart>
+          <area-charts
+            class=" w-full"
+            title="Tratamientos Solicitados"
+            subtitle="Tratamientos más Solicitados"
+            :names="st1n"
+            :values="st1v"
+            typecharts="area"
+          ></area-charts>
         </div>
+        <div>
+          <bar-charts 
+          class=" w-full"
+            title="Citas Por Día"
+            subtitle="Resumen Estadístico de Citas"
+            :names="st1n"
+            :values="st1v"
+            typecharts="bar">
+
+          </bar-charts>
+        </div>
+        
       </div>
     </dashboard-layout>
   </app-layout>
@@ -68,54 +92,37 @@ import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import VueApexCharts from "vue3-apexcharts";
 import DashboardLayout from "@/Layouts/DashboardLayout.vue";
+import AreaCharts from "@/Components/AreaCharts.vue";
+import BarCharts from  "@/Components/BarCharts.vue";
 
 export default defineComponent({
   components: {
     AppLayout,
     VueApexCharts,
-    DashboardLayout
+    DashboardLayout,
+    AreaCharts,
+    BarCharts,
   },
   props: {
     nPatients: Number,
     nDentists: Number,
+    st1n: Array,
+    st1v: Array,
+    endDate: Date,
+    initDate: Date
   },
-  data: function () {
+  data() {
     return {
-      options1: {
-        chart: {
-          id: "vuechart-example",
-        },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
-        },
-        stroke: {
-          curve: "smooth",
-        },
-      },
-      series1: [
-        {
-          name: "series-1",
-          data: [30, 40, 45, 50, 49, 60, 70, 91],
-        },
-      ],
-      options2: {
-        chart: {
-          id: "vuechart-example",
-        },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
-        },
-        stroke: {
-          curve: "smooth",
-        },
-      },
-      series2: [
-        {
-          name: "series-1",
-          data: [30, 40, 45, 50, 49, 60, 70, 91],
-        },
-      ],
+      dateStart: this.initDate,
+      dateEnd: this.endDate,
+      namesOne: this.st1n,
+      valuesOne: this.st1v,
     };
   },
+  methods: {
+    searchDate(){
+      this.$inertia.get(this.route("dashboard", { dateStart: this.dateStart, dateEnd: this.dateEnd }));
+    }
+  }
 });
 </script>
