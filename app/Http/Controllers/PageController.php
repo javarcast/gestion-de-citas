@@ -8,6 +8,7 @@ use App\Models\Patient;
 use App\Models\User;
 use App\Models\Treatment;
 use App\Models\AppoimentTreatments;
+use App\Models\Appointment;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\DB;
@@ -29,6 +30,12 @@ class PageController extends Controller
                 ->get();
         $st1n= [];
         $st1v =[];
+        $cpdn = [];
+        $cpdv= [];
+        $cPD = Appointment::groupBy('date')
+                ->selectRaw('count(id) as number_of_appointment, date')
+                ->whereBetween('date',[$initDate,$endDate])
+                ->get();
 
        //return "<code>".$aTs."</code>";
         foreach ($aTs as $key => $aT) {
@@ -36,8 +43,13 @@ class PageController extends Controller
             array_push($st1n,$aT->name);
         }
 
+        foreach ($cPD as $key => $value) {
+            array_push($cpdv,$value->number_of_appointment);
+            array_push($cpdn,$value->date);
+        }
+
         //return $st1n;
-        return Inertia::render('Dashboard',compact("nPatients","nDentists","st1n","st1v","initDate", "endDate"));
+        return Inertia::render('Dashboard',compact("nPatients","nDentists","st1n","st1v","cpdv","cpdn","initDate", "endDate"));
 
     }
 

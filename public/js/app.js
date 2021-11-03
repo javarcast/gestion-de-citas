@@ -21397,14 +21397,14 @@ __webpack_require__.r(__webpack_exports__);
     st1n: Array,
     st1v: Array,
     endDate: Date,
-    initDate: Date
+    initDate: Date,
+    cpdv: Array,
+    cpdn: Array
   },
   data: function data() {
     return {
       dateStart: this.initDate,
-      dateEnd: this.endDate,
-      namesOne: this.st1n,
-      valuesOne: this.st1v
+      dateEnd: this.endDate
     };
   },
   methods: {
@@ -27457,9 +27457,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             "class": "w-full",
             title: "Citas Por Día",
             subtitle: "Resumen Estadístico de Citas",
-            names: _ctx.st1n,
-            values: _ctx.st1v,
-            typecharts: "bar"
+            names: _ctx.cpdn,
+            values: _ctx.cpdv,
+            typecharts: "line"
           }, null, 8
           /* PROPS */
           , ["names", "values"])])])];
