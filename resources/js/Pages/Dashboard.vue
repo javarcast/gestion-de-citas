@@ -75,9 +75,9 @@
           class=" w-full"
             title="Citas Por Día"
             subtitle="Resumen Estadístico de Citas"
-            :names="st1n"
-            :values="st1v"
-            typecharts="bar">
+            :names="cpdn"
+            :values="cpdv"
+            typecharts="line">
 
           </bar-charts>
         </div>
@@ -109,14 +109,14 @@ export default defineComponent({
     st1n: Array,
     st1v: Array,
     endDate: Date,
-    initDate: Date
+    initDate: Date,
+    cpdv: Array,
+    cpdn: Array,
   },
   data() {
     return {
       dateStart: this.initDate,
       dateEnd: this.endDate,
-      namesOne: this.st1n,
-      valuesOne: this.st1v,
     };
   },
   methods: {
