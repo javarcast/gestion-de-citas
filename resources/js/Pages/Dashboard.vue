@@ -29,10 +29,8 @@
           </div>
         </div>
       </div>
-      <div class="charts">
-        <div >
-          <div class="flex flex-wrap justify-between items-center">
-            <div class="block md:w-2/5 mb-2">
+       <div class="flex flex-wrap justify-end items-center mb-4">
+            <div class="grid mr-2  ">
               <span class="text-xs text-gray-400"> Fecha Inicio</span>
               <input
                 :max="dateEnd"
@@ -41,7 +39,7 @@
                 v-model="dateStart"
               />
             </div>
-            <div class="block md:w-2/5 mb-2">
+            <div class="grid ">
               <span class="text-xs text-gray-400"> Fecha Fin</span>
               <input
                 type="date"
@@ -56,11 +54,14 @@
                 rounded-md
                 text-white
                 font-bold
-                mt-4
+                ml-2
                 py-2
                 mr-4
+                mt-4
                 px-4"><i class="fas fa-search"></i></button>
           </div>
+      <div class="charts">
+        <div >
           <area-charts
             class=" w-full"
             title="Tratamientos Solicitados"

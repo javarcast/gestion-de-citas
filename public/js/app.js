@@ -27417,39 +27417,39 @@ var _hoisted_13 = {
   "class": "font-bold text-title"
 };
 var _hoisted_14 = {
-  "class": "charts"
+  "class": "flex flex-wrap justify-end items-center mb-4"
 };
 var _hoisted_15 = {
-  "class": "flex flex-wrap justify-between items-center"
-};
-var _hoisted_16 = {
-  "class": "block md:w-2/5 mb-2"
+  "class": "grid mr-2"
 };
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "text-xs text-gray-400"
 }, " Fecha Inicio", -1
 /* HOISTED */
 );
 
-var _hoisted_18 = ["max"];
-var _hoisted_19 = {
-  "class": "block md:w-2/5 mb-2"
+var _hoisted_17 = ["max"];
+var _hoisted_18 = {
+  "class": "grid"
 };
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "text-xs text-gray-400"
 }, " Fecha Fin", -1
 /* HOISTED */
 );
 
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "fas fa-search"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_22 = [_hoisted_21];
+var _hoisted_21 = [_hoisted_20];
+var _hoisted_22 = {
+  "class": "charts"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_area_charts = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("area-charts");
 
@@ -27472,7 +27472,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           /* TEXT */
           )])]), _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.nDentists), 1
           /* TEXT */
-          )])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+          )])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
             max: _ctx.dateEnd,
             type: "date",
             "class": "form-input rounded-md shadow-sm",
@@ -27481,7 +27481,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             })
           }, null, 8
           /* PROPS */
-          , _hoisted_18), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.dateStart]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+          , _hoisted_17), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.dateStart]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
             type: "date",
             "class": "form-input rounded-md shadow-sm",
             "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
@@ -27493,8 +27493,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             onClick: _cache[2] || (_cache[2] = function () {
               return _ctx.searchDate && _ctx.searchDate.apply(_ctx, arguments);
             }),
-            "class": "bg-blue-500 hover:bg-blue-700 md:h-1/2 rounded-md text-white font-bold mt-4 py-2 mr-4 px-4"
-          }, _hoisted_22)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_area_charts, {
+            "class": "bg-blue-500 hover:bg-blue-700 md:h-1/2 rounded-md text-white font-bold ml-2 py-2 mr-4 mt-4 px-4"
+          }, _hoisted_21)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_area_charts, {
             "class": "w-full",
             title: "Tratamientos Solicitados",
             subtitle: "Tratamientos más Solicitados",
