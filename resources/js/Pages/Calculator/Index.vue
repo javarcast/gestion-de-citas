@@ -48,12 +48,13 @@ export default defineComponent({
   },
   methods:{
     getEmitClick(data){
-      if(this.treatmentsSelected.find(treatment => treatment.id == data)){
+      if(this.treatmentsSelected.find(treatment => treatment.id == data.treatment)){
         this.treatmentsSelected=this.treatmentsSelected.filter(treatment =>{
-          return treatment.id !==data;
+          return treatment.id !==data.treatment;
         });
       }else{
-         const treatmentSelected = this.treatments.find(treatment => treatment.id == data);
+         const treatmentSelected = this.treatments.find(treatment => treatment.id == data.treatment);
+          treatmentSelected.count = data.count
         this.treatmentsSelected.push(treatmentSelected);
       }
     },
@@ -66,7 +67,8 @@ export default defineComponent({
     totalAmount(){
       this.total = 0;
       this.treatmentsSelected.forEach(treatment=>{
-          this.total += parseInt(treatment.price);
+
+          this.total += (parseInt(treatment.price)*parseInt(treatment.count));
       })
       return parseInt(this.total);
     }

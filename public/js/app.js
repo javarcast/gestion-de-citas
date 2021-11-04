@@ -19346,12 +19346,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      count: 1
+    };
+  },
   props: {
     treatment: Object
   },
   methods: {
     sendEmitClick: function sendEmitClick() {
-      this.$emit("sendEmitEvent", this.treatment.id);
+      var data = {
+        treatment: this.treatment.id,
+        count: this.count
+      };
+      this.$emit("sendEmitEvent", data);
+    }
+  },
+  watch: {
+    count: function count() {
+      if (this.count < 1) {
+        this.count = 1;
+      }
     }
   }
 });
@@ -21328,15 +21344,16 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getEmitClick: function getEmitClick(data) {
       if (this.treatmentsSelected.find(function (treatment) {
-        return treatment.id == data;
+        return treatment.id == data.treatment;
       })) {
         this.treatmentsSelected = this.treatmentsSelected.filter(function (treatment) {
-          return treatment.id !== data;
+          return treatment.id !== data.treatment;
         });
       } else {
         var treatmentSelected = this.treatments.find(function (treatment) {
-          return treatment.id == data;
+          return treatment.id == data.treatment;
         });
+        treatmentSelected.count = data.count;
         this.treatmentsSelected.push(treatmentSelected);
       }
     }
@@ -21350,7 +21367,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.total = 0;
       this.treatmentsSelected.forEach(function (treatment) {
-        _this.total += parseInt(treatment.price);
+        _this.total += parseInt(treatment.price) * parseInt(treatment.count);
       });
       return parseInt(this.total);
     }
@@ -22478,7 +22495,13 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 }, " Tratamiento "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   scope: "col",
   "class": "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-3/12"
-}, " Precio ")])], -1
+}, " Cantidad "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+  scope: "col",
+  "class": "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-3/12"
+}, " Precio "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+  scope: "col",
+  "class": "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-3/12"
+}, " Total ")])], -1
 /* HOISTED */
 );
 
@@ -22501,17 +22524,30 @@ var _hoisted_8 = {
   "class": "text-sm text-gray-500"
 };
 var _hoisted_9 = {
+  "class": "px-6 py-4 whitespace-nowrap"
+};
+var _hoisted_10 = {
+  "class": "text-sm text-gray-500"
+};
+var _hoisted_11 = {
+  "class": "px-6 py-4 whitespace-nowrap"
+};
+var _hoisted_12 = {
+  "class": "text-sm text-gray-500"
+};
+var _hoisted_13 = {
   "class": "bg-gray-50"
 };
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+  colspan: "3",
   scope: "col",
-  "class": "px-6 py-3 text-left text-s font-medium text-gray-700 uppercase tracking-wider w-9/12"
+  "class": "px-6 py-3 text-left text-s font-medium text-gray-700 uppercase tracking-wider"
 }, "Total", -1
 /* HOISTED */
 );
 
-var _hoisted_11 = {
+var _hoisted_15 = {
   scope: "col",
   "class": "px-6 py-3 text-left text-s font-medium text-gray-700 uppercase tracking-wider w-9/12"
 };
@@ -22521,12 +22557,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: treatment.id
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(treatment.name), 1
     /* TEXT */
-    )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, "$" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(treatment.price), 1
+    )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(treatment.count), 1
+    /* TEXT */
+    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, "$" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(treatment.price), 1
+    /* TEXT */
+    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, "$" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(parseInt(treatment.count) * parseInt(treatment.price)), 1
     /* TEXT */
     )])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tfoot", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_11, "$" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.total), 1
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tfoot", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_15, "$" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.total), 1
   /* TEXT */
   )])])]);
 }
@@ -22593,13 +22633,23 @@ var _hoisted_1 = {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("label", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.treatment.name) + " ", 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.sendEmitClick && $options.sendEmitClick.apply($options, arguments);
     }),
     "class": "text-blue-900 w-6 h-6 mr-2 focus:ring-grenn-300 focus:ring-opacity-25 border border-gray-300 rounded",
     type: "checkbox"
-  })]);
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $data.count = $event;
+    }),
+    min: "1",
+    "class": "border border-gray-300 w-20 rounded",
+    type: "number",
+    name: "count"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.count]])])]);
 }
 
 /***/ }),
