@@ -24,10 +24,10 @@ class AppointmentController extends Controller
         $appointments=Appointment
         ::join("users","users.id","=","appointments.user_id")
         ->join("patients","patients.id","=","appointments.patient_id")
+        ->where('patients.name', 'LIKE', "%$request->q%")
         ->select('appointments.id','date','hour','users.name as doctor','patients.name as paciente')
         ->paginate(10);
 
-    
 
         return Inertia::render('Appointment/Index',compact("appointments"));
     }
@@ -66,6 +66,7 @@ class AppointmentController extends Controller
             'patient_id' => 'required|numeric',
             'doctor_id' => 'required',
             'total' => 'required|numeric',
+            'list' => 'required'
         ]);
 
     
@@ -81,11 +82,14 @@ class AppointmentController extends Controller
 
         $cont=0;
         while ($cont < count($aux)) {
+            
             $appointmentTrea= new AppoimentTreatments();
             $appointmentTrea->appointment_id=$appointment->id;
             $appointmentTrea->treatment_id=$aux[$cont]['treatment_id'];
             $appointmentTrea->amount=$aux[$cont]['amount'];
+            $appointmentTrea->count=$aux[$cont]['count'];
             $appointmentTrea->save();
+            
             $cont++;
         }
         $message = "La cita ha sido creado"; 
@@ -106,10 +110,11 @@ class AppointmentController extends Controller
 
         $appTrea=  AppoimentTreatments
         ::join("treatments","treatments.id","=","treatment_id")
+        ->select('treatments.id as treatment_id','treatments.name as treatment_name','amount','count')
         ->where("appointment_id","=",$id)
         ->get();
 
-        return Inertia::render('Appointment/Show', compact('appointment'));
+        return Inertia::render('Appointment/Show', compact('appointment','appTrea'));
     }
 
     /**
@@ -132,7 +137,7 @@ class AppointmentController extends Controller
 
         $appTreat=AppoimentTreatments::
         join("treatments","treatments.id","=","treatment_id")
-        ->select('treatments.id as treatment_id','treatments.name as treatment_name','amount')
+        ->select('treatments.id as treatment_id','treatments.name as treatment_name','amount','count')
         ->where("appointment_id","=",$id)
         ->get();
         
@@ -155,6 +160,7 @@ class AppointmentController extends Controller
             'patient_id' => 'required|numeric',
             'doctor_id' => 'required',
             'total' => 'required|numeric',
+            'list' => 'required'
         ]);
 
         $appointment = Appointment::findOrFail($id);
@@ -175,11 +181,14 @@ class AppointmentController extends Controller
 
         $cont=0;
         while ($cont < count($aux)) {
-            $appointmentTrea= new AppoimentTreatments();
-            $appointmentTrea->appointment_id=$appointment->id;
-            $appointmentTrea->treatment_id=$aux[$cont]['treatment_id'];
-            $appointmentTrea->amount=$aux[$cont]['amount'];
-            $appointmentTrea->save();
+            if($aux[$cont]['count']>0){
+                $appointmentTrea= new AppoimentTreatments();
+                $appointmentTrea->appointment_id=$appointment->id;
+                $appointmentTrea->treatment_id=$aux[$cont]['treatment_id'];
+                $appointmentTrea->amount=$aux[$cont]['amount'];
+                $appointmentTrea->count=$aux[$cont]['count'];
+                $appointmentTrea->save();
+            }
             $cont++;
         }
         $message = "La Cita ha sido Actualizada!!"; 

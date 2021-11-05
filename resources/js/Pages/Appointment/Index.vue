@@ -15,6 +15,12 @@
               placeholder="Buscar..."
               v-model="q"
             />
+            <input
+              type="text"
+              class="form-input rounded-md shadow-sm"
+              placeholder="Buscar Fecha"
+              v-model="f"
+            />
 
             <Link
               :href="route('citas.create')"
@@ -52,12 +58,16 @@ export default defineComponent({
   },
   watch: {
     q: function (value) {
-      this.$inertia.replace(this.route("citas.index", { q: value }));
+      this.$inertia.replace(this.route("citas.index", {q: value }));
+    },
+    f: function (value) {
+      this.$inertia.replace(this.route("citas.index", {f: value }));
     },
   },
   data() {
     return {
-      q: "",
+        q:"",
+        f:""
     };
   },
 });

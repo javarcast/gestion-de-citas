@@ -1,29 +1,75 @@
 <template>
-  <table>
+  <div class="flex flex-col">
+    <div class="flex">
+      <label class="block text-left w-full">
+        <span class="text-gray-700">Paciente</span>
+        <input
+          type="text"
+          disabled
+          class="block w-full mt-1 rounded-md shadow-sm border-gray-200"
+          :value="appointment.patient.name"
+        />
+      </label>
 
+      <label class="block text-left w-full">
+        <span class="text-gray-700">Doctor</span>
+        <input
+          type="text"
+          disabled
+          class="form-select block w-full mt-1 rounded-md shadow-sm border-gray-200"
+          :value="appointment.doctor.name"
+        />
+      </label>
+    </div>
+    <div class="flex">
+      <label class="block text-left w-full">
+        <span class="text-gray-700">Fecha</span>
+        <input
+          type="text"
+          disabled
+          class="block w-full mt-1 rounded-md shadow-sm border-gray-200"
+          :value="appointment.date"
+        />
+      </label>
+
+      <label class="block text-left w-full">
+        <span class="text-gray-700">Hora</span>
+        <input
+          type="text"
+          disabled
+          class="form-select block w-full mt-1 rounded-md shadow-sm border-gray-200"
+          :value="appointment.hour"
+        />
+      </label>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th class="border px-4 py-2">Tratamiento</th>
+        <th class="border md-table-cell px-4 py-2">Cantidad</th>
+        <th class="border d-table-cell px-4 py-2">Costo Unitario</th>
+      </tr>
+    </thead>
     <tbody>
-        <tr>
-            <th class="border px-4 py-2"> Paciente</th>
-            <td class="border px-4 py-2">{{ appointment.patient.name }}</td>
-        </tr>
-        <tr>
-            <th class="border px-4 py-2"> Doctor</th>
-            <td class="border px-4 py-2">{{ appointment.doctor.name }}</td>
-        </tr>
-        <tr>
-            <th class="border px-4 py-2"> Fecha</th>
-            <td class="border px-4 py-2">{{ appointment.date }}</td>
-        </tr>
-        <tr>
-            <th class="border px-4 py-2"> Hora</th>
-            <td class="border px-4 py-2">{{ appointment.hour }}</td>
-        </tr>
-        <tr>
-          <th class="border px-4 py-2"> Total</th>
-          <td class="border px-4 py-2">{{ appointment.total}}</td>
-        </tr>
-        
+      <tr v-for="appT in appTrea" :key="appT.treatment_id">
+        <td class="border px-4 py-2">
+          {{ appT.treatment_name }}
+        </td>
+        <td class="border md-table-cell px-3 py-2">
+          {{ appT.count }}
+        </td>
+        <td class="px-4 md-table-cell border py-2">
+          {{ appT.amount }}
+        </td>
+      </tr>
+      
     </tbody>
+    <tfoot>
+      <tr class="px-4 md-table-cell border py-2 text-right font-black">
+        Total: {{appointment.total}}
+      </tr>
+    </tfoot>
   </table>
 </template>
 
@@ -32,6 +78,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   props: {
     appointment: Object,
+    appTrea: Array,
   },
 });
 </script>
