@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-    
+        
 
         $users = User::where('name', 'LIKE', "%$request->q%")
         ->orWhere('phone_number', 'LIKE', "%$request->q%")
@@ -48,8 +48,8 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'dni' => 'required|numeric',
-            'phone_number' => 'required|numeric',
+            'dni' => 'required|numeric|unique:users',
+            'phone_number' => 'required|numeric|digits:10',
             'address' => 'required',
             'email' => 'required|email|unique:users',
             'rol_id' => 'required|numeric|min:0',
@@ -107,7 +107,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'dni' => 'required|numeric',
-            'phone_number' => 'required|numeric',
+            'phone_number' => 'required|numeric|digits:10',
             'address' => 'required',
             'email' => 'required|email',
             'rol_id' => 'required|numeric|min:0',

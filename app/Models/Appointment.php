@@ -14,6 +14,7 @@ class Appointment extends Model
         'date',
         'total',
         'patient_id',
+        'status_id',
         'user_id'
     ];
 }
