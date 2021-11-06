@@ -10,21 +10,21 @@
         <div class="card flex flex-col justify-around">
           <i class="far fa-user fa-2x text-lightblue" aria-hidden="true"></i>
           <div class="card_inner">
-            <p class="text-primary-p">Numero de Pacientes</p>
+            <p class="text-primary-p">Número de Pacientes</p>
             <span class="font-bold text-title">{{ nPatients }}</span>
           </div>
         </div>
         <div class="card flex flex-col justify-around">
           <i class="far fa-calendar-alt fa-2x text-red" aria-hidden="true"></i>
           <div class="card_inner">
-            <p class="text-primary-p">Numero de Citas</p>
-            <span class="font-bold text-title">578</span>
+            <p class="text-primary-p nCita">Número de Citas Registradas</p>
+            <span class="font-bold text-title">{{nPatients}}</span>
           </div>
         </div>
         <div class="card flex flex-col justify-around">
           <i class="fas fa-user-md fa-2x text-green-600" aria-hidden="true"></i>
           <div class="card_inner">
-            <p class="text-primary-p">Numero de Odontólogos</p>
+            <p class="text-primary-p">Número de Odontólogos</p>
             <span class="font-bold text-title">{{ nDentists }}</span>
           </div>
         </div>
@@ -106,6 +106,7 @@ export default defineComponent({
   props: {
     nPatients: Number,
     nDentists: Number,
+    nAppointments: Number,
     st1n: Array,
     st1v: Array,
     endDate: Date,

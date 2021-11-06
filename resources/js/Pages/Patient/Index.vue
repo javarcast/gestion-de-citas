@@ -16,7 +16,7 @@
               v-model="q"
             />
 
-            <Link
+            <Link v-if="$page.props.user.rol_id===1"
               :href="route('pacientes.create')"
               class="bg-blue-500 text-white font-bold p-2 mx-4 rounded"
               ><i class="far fa-user"></i> Crear Paciente</Link

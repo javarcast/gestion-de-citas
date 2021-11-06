@@ -69,6 +69,22 @@
                   class="form-input w-full rounded-md shadow-sm"
                 />
               </div>
+               <div class="w-full">
+                <label class="block font-medium text-sm text-gray-700">Estatus</label>
+                <select
+                  v-model="form.status_id"
+                  class="form-select block w-full rounded-md shadow-sm"
+                >
+                  <option selected value="">Selecciona Estatus</option>
+                  <option
+                    v-for="statu in status"
+                    :key="statu.id"
+                    :value="statu.id"
+                  >
+                    {{ statu.name }}
+                  </option>
+                </select>
+              </div>
             </div>
 <br />
             <div class="flex md:flex-row justify-between sm:flex-col">
@@ -235,6 +251,7 @@ export default {
     patients: Array,
     doctors: Array,
     treatments: Array,
+    status: Array,
     appointment: Object,
     appTreat: Array,
     errors: Array,
@@ -247,6 +264,7 @@ export default {
         treatment_id:"",
         date: this.appointment.date,
         time: this.appointment.hour,
+        status_id: this.appointment.status_id,
         price: "",
         count:"",
         total:this.appointment.total,

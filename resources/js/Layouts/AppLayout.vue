@@ -109,6 +109,15 @@
                         <jet-nav-link v-if="$page.props.user.rol_id===1" :href="route('usuarios.index')" :active="route().current('usuarios.*')">
                             Usuarios
                         </jet-nav-link>
+                        <jet-responsive-nav-link :href="route('pacientes.index')" :active="route().current('pacientes.*')">
+                            Pacientes
+                        </jet-responsive-nav-link>
+                        <jet-responsive-nav-link :href="route('calculadora')" :active="route().current('calculadora')">
+                            Calculadora
+                        </jet-responsive-nav-link>
+                        <jet-responsive-nav-link :href="route('citas.index')" :active="route().current('citas.*')">
+                            Citas
+                        </jet-responsive-nav-link>
                     </div>
 
                     <!-- Responsive Settings Options -->

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Treatment;
 use App\Models\User;
 use App\Models\Patient;
+use App\Models\Status;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -21,12 +22,14 @@ class AppointmentController extends Controller
      */
     public function index(Request $request)
     {
-        $appointments=Appointment
-        ::join("users","users.id","=","appointments.user_id")
+        $appointments=Appointment::join("users","users.id","=","appointments.user_id")
         ->join("patients","patients.id","=","appointments.patient_id")
-        ->where('patients.name', 'LIKE', "%$request->q%")
+        ->where('users.name', 'LIKE', "%$request->valor%")
+        ->orWhere('patients.name', 'LIKE', "%$request->valor%")
+        ->orWhere('patients.dni', 'LIKE', "%$request->valor%")
+        ->orWhere('appointments.date', 'LIKE', "%$request->valor%")
         ->select('appointments.id','date','hour','users.name as doctor','patients.name as paciente')
-        ->paginate(10);
+        ->paginate(7);
 
 
         return Inertia::render('Appointment/Index',compact("appointments"));
@@ -69,31 +72,40 @@ class AppointmentController extends Controller
             'list' => 'required'
         ]);
 
-    
-        $appointment = New Appointment();
-        $appointment->date=$request->get('date');
-        $appointment->hour=$request->get('time');
-        $appointment->patient_id=$request->get('patient_id');
-        $appointment->user_id=$request->get('doctor_id');
-        $appointment->total=$request->get('total');
-        $appointment->save();
+        //PENDIENTE VALIDAR UNA SOLA CITA A LA MISMA HORA U FECHA DEL DOCTOR
+       /* $cita = Appointment::
+        where('user_id','=',$request->get('doctor_id'))
+        ->whereDate('date',$request->get('date'))
+        ->whereTime('hour',$request->get('time'))
+        ->select(count('user_id'))
+        ->get();*/
+        
+            $appointment = New Appointment();
+            $appointment->date=$request->get('date');
+            $appointment->hour=$request->get('time');
+            $appointment->patient_id=$request->get('patient_id');
+            $appointment->user_id=$request->get('doctor_id');
+            $appointment->total=$request->get('total');
+            $appointment->save();
 
-         $aux=$request->get('list');
+            $aux=$request->get('list');
 
-        $cont=0;
-        while ($cont < count($aux)) {
+            $cont=0;
             
-            $appointmentTrea= new AppoimentTreatments();
-            $appointmentTrea->appointment_id=$appointment->id;
-            $appointmentTrea->treatment_id=$aux[$cont]['treatment_id'];
-            $appointmentTrea->amount=$aux[$cont]['amount'];
-            $appointmentTrea->count=$aux[$cont]['count'];
-            $appointmentTrea->save();
+            while ($cont < count($aux)) {
             
-            $cont++;
-        }
-        $message = "La cita ha sido creado"; 
-        return redirect()->route('citas.index')->with('status',$message);
+                $appointmentTrea= new AppoimentTreatments();
+                $appointmentTrea->appointment_id=$appointment->id;
+                $appointmentTrea->treatment_id=$aux[$cont]['treatment_id'];
+                $appointmentTrea->amount=$aux[$cont]['amount'];
+                $appointmentTrea->count=$aux[$cont]['count'];
+                $appointmentTrea->save();
+            
+                $cont++;
+            }
+            $message = "La cita ha sido creado"; 
+            return redirect()->route('citas.index')->with('status',$message);
+       
     }
 
     /**
@@ -107,6 +119,7 @@ class AppointmentController extends Controller
         $appointment = Appointment::findOrFail($id);
         $appointment['doctor'] = User::findOrFail($appointment->user_id);
         $appointment['patient'] = Patient::findOrFail($appointment->patient_id);
+        $appointment['status'] = Status::findOrFail($appointment->status_id);
 
         $appTrea=  AppoimentTreatments
         ::join("treatments","treatments.id","=","treatment_id")
@@ -131,6 +144,7 @@ class AppointmentController extends Controller
         ->get();
 
         $treatments= Treatment::get();
+        $status= Status::get();
 
 
         $appointment=Appointment::findOrFail($id);
@@ -142,7 +156,7 @@ class AppointmentController extends Controller
         ->get();
         
         
-        return Inertia::render('Appointment/Edit', compact('patients','doctors','treatments','appointment','appTreat'));
+        return Inertia::render('Appointment/Edit', compact('patients','doctors','treatments','status','appointment','appTreat'));
     }
 
     /**
@@ -159,6 +173,7 @@ class AppointmentController extends Controller
             'time' => 'required',
             'patient_id' => 'required|numeric',
             'doctor_id' => 'required',
+            'status_id' => 'required',
             'total' => 'required|numeric',
             'list' => 'required'
         ]);
@@ -166,6 +181,7 @@ class AppointmentController extends Controller
         $appointment = Appointment::findOrFail($id);
         $appointment->date=$request->get('date');
         $appointment->hour=$request->get('time');
+        $appointment->status_id=$request->get('status_id');
         $appointment->patient_id=$request->get('patient_id');
         $appointment->user_id=$request->get('doctor_id');
         $appointment->total=$request->get('total');

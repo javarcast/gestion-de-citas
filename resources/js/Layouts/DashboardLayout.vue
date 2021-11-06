@@ -28,7 +28,7 @@
                 >Citas
               </Link>
             </li>
-            <li class="m-3">
+            <li v-if="$page.props.user.rol_id===1" class="m-3">
               <Link
                 :href="route('usuarios.index')"
                 class="text-white p-3 mb-2 sidebar-link"

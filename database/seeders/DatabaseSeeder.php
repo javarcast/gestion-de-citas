@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-       // $this->call([RolSeeder::class]);
-        $this->call([StatusSeeder::class]);
-        /*User::factory()->create([
+       $this->call([RolSeeder::class]);
+       $this->call([StatusSeeder::class]);
+        User::factory()->create([
             'email' => 'admin@smileclinic.com',
             'password' => bcrypt('123456'),
             'name' => 'Smile Clinic',
@@ -36,14 +36,20 @@ class DatabaseSeeder extends Seeder
             'name' => 'Paola',
             'phone_number' => '123456789',
             'rol_id' => 2,
-            'dni'=> '2',
+            'dni'=> '20624646',
+        ]);
+        Patient::factory()->create([
+            'address' => 'San Cristobal',
+            'name' => 'Luis Diamanti',
+            'phone_number' => '123456789',
+            'dni'=> '12964786',
         ]);
         $this->call([TreatmentSeeder::class]);
 
         User::factory(10)->create();
 
         Patient::factory(50)->create();
-*/
+
         $appointments = Appointment::factory(50)->create();
 
         foreach ($appointments as $key => $appointment) {
@@ -63,7 +69,8 @@ class DatabaseSeeder extends Seeder
                 AppoimentTreatments::factory()->create([
                     'treatment_id' => $treatment->id,
                     'appointment_id' => $appointment->id,
-                    'amount'=> $treatment->price
+                    'amount'=> $treatment->price,
+                    'count'=> rand(1,3)
                 ]);
             }
         }

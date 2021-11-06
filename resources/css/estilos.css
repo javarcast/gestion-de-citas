@@ -81,6 +81,9 @@ p {
     font-size: 14px;
     font-weight: 700;
   }
+  .nCita{
+    width: 180px;
+  }
   .charts {
     display: grid;
     grid-template-columns: 1fr 1fr;
