@@ -42,6 +42,7 @@
             <div class="grid ">
               <span class="text-xs text-gray-400"> Fecha Fin</span>
               <input
+                :max="dateEnd"
                 type="date"
                 class="form-input rounded-md shadow-sm"
                 v-model="dateEnd"
