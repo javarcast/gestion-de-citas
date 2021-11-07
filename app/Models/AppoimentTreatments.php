@@ -11,6 +11,7 @@ class AppoimentTreatments extends Model
 
     protected $fillable = [
         'amount',
+        'count',
         'treatment_id',
         'appointment_id'
     ];

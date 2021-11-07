@@ -1318,9 +1318,6 @@ select {
 .w-1\/12 {
 	width: 8.333333%;
 }
-.w-28 {
-	width: 7rem;
-}
 .min-w-0 {
 	min-width: 0px;
 }
@@ -1416,6 +1413,9 @@ select {
 }
 .justify-around {
 	justify-content: space-around;
+}
+.justify-evenly {
+	justify-content: space-evenly;
 }
 .gap-6 {
 	gap: 1.5rem;
@@ -1744,6 +1744,9 @@ select {
 .pt-0 {
 	padding-top: 0px;
 }
+.pr-1 {
+	padding-right: 0.25rem;
+}
 .text-left {
 	text-align: left;
 }
@@ -1791,6 +1794,9 @@ select {
 }
 .font-bold {
 	font-weight: 700;
+}
+.font-black {
+	font-weight: 900;
 }
 .uppercase {
 	text-transform: uppercase;
@@ -2073,6 +2079,9 @@ p {
     color: #a5aaad;
     font-size: 14px;
     font-weight: 700;
+  }
+.nCita{
+    width: 180px;
   }
 .charts {
     display: grid;
@@ -2463,6 +2472,10 @@ p {
 		transform: var(--tw-transform);
 	}
 
+	.sm\:flex-col {
+		flex-direction: column;
+	}
+
 	.sm\:items-start {
 		align-items: flex-start;
 	}
@@ -2572,10 +2585,6 @@ p {
 		height: 50%;
 	}
 
-	.md\:w-2\/5 {
-		width: 40%;
-	}
-
 	.md\:w-1\/2 {
 		width: 50%;
 	}
@@ -2586,6 +2595,10 @@ p {
 
 	.md\:grid-cols-2 {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.md\:flex-row {
+		flex-direction: row;
 	}
 
 	.md\:gap-6 {

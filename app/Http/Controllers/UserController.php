@@ -23,8 +23,10 @@ class UserController extends Controller
         ->orWhere('phone_number', 'LIKE', "%$request->q%")
         ->orWhere('email', 'LIKE', "%$request->q%")->paginate(10);
 
-                               
-        return Inertia::render('User/Index',compact("users"));
+        
+            return Inertia::render('User/Index',compact("users"));
+                                  
+        
     }
 
     /**

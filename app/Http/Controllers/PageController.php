@@ -20,9 +20,10 @@ class PageController extends Controller
         $initDate = ($request->dateStart)?$request->dateStart:Carbon::createFromFormat('m/d/Y', '01/01/2021')->format('Y-m-d');
         $endDate = ($request->dateEnd)?$request->dateEnd:Carbon::now()->format('Y-m-d');
         $nPatients = Patient::count();
+        $nAppointments = Appointment::count();
         $nDentists = User::Where('rol_id', '=', "2")
         ->count();
-        $aTs = AppoimentTreatments::groupBy('treatments.id')
+        $aTs = AppoimentTreatments::groupBy('appoiment_treatments.treatment_id')
                 ->selectRaw('count(appoiment_treatments.id) as number_of_treatments, treatments.name')
                 ->join('treatments','treatments.id', '=', 'appoiment_treatments.treatment_id')
                 ->join('appointments','appointments.id','=', 'appoiment_treatments.appointment_id')
@@ -49,7 +50,7 @@ class PageController extends Controller
         }
 
         //return $st1n;
-        return Inertia::render('Dashboard',compact("nPatients","nDentists","st1n","st1v","cpdv","cpdn","initDate", "endDate"));
+        return Inertia::render('Dashboard',compact("nPatients","nDentists","nAppointments","st1n","st1v","cpdv","cpdn","initDate", "endDate"));
 
     }
 

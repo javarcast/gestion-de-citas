@@ -16,6 +16,7 @@ class CreateAppoimentTreatmentsTable extends Migration
         Schema::create('appoiment_treatments', function (Blueprint $table) {
             $table->id();
             $table->double('amount');
+            $table->double('count');
             $table->foreignId('treatment_id');
             $table->foreignId('appointment_id');
             $table->timestamps();

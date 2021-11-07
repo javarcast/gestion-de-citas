@@ -14,11 +14,10 @@
               <label class="block text-left w-full">
                 <span class="text-gray-700">Paciente</span>
                 <select
-                  required
                   v-model="form.patient_id"
                   class="form-select block w-full mt-1 rounded-md shadow-sm"
                 >
-                  <option selected value="-1">Selecciona Paciente</option>
+                  <option selected value="">Selecciona Paciente</option>
                   <option
                     v-for="patient in patients"
                     :key="patient.id"
@@ -32,11 +31,10 @@
               <label class="block text-left w-full">
                 <span class="text-gray-700">Doctor</span>
                 <select
-                  required
                   v-model="form.doctor_id"
                   class="form-select block w-full mt-1 rounded-md shadow-sm"
                 >
-                  <option selected value="-1">Selecciona Doctor</option>
+                  <option selected value="">Selecciona Doctor</option>
                   <option
                     v-for="doctor in doctors"
                     :key="doctor.id"
@@ -47,6 +45,7 @@
                 </select>
               </label>
             </div>
+            <br />
             <div class="flex justify-between">
               <div class="w-full">
                 <label class="block font-medium text-sm text-gray-700"
@@ -55,7 +54,6 @@
                 <input
                   type="date"
                   v-model="form.date"
-                  required
                   :min="currentDate"
                   class="form-input w-full rounded-md shadow-sm"
                 />
@@ -68,22 +66,36 @@
                 <input
                   type="time"
                   v-model="form.time"
-                  required
                   class="form-input w-full rounded-md shadow-sm"
                 />
               </div>
+               <div class="w-full">
+                <label class="block font-medium text-sm text-gray-700">Estatus</label>
+                <select
+                  v-model="form.status_id"
+                  class="form-select block w-full rounded-md shadow-sm"
+                >
+                  <option selected value="">Selecciona Estatus</option>
+                  <option
+                    v-for="statu in status"
+                    :key="statu.id"
+                    :value="statu.id"
+                  >
+                    {{ statu.name }}
+                  </option>
+                </select>
+              </div>
             </div>
-
-            <div class="flex">
+<br />
+            <div class="flex md:flex-row justify-between sm:flex-col">
               <label class="block text-left">
                 <span class="text-gray-700">Tratamiento</span>
                 <select
-                  required
                   v-model="form.treatment_id"
                   class="form-select block mt-1 rounded-md shadow-sm"
                   @click="showPrice"
                 >
-                  <option selected value="-1">Selecciona un Tratamiento</option>
+                  <option selected value="">Selecciona un Tratamiento</option>
                   <option
                     v-for="treatment in treatments"
                     :key="treatment.id"
@@ -99,6 +111,16 @@
                   </option>
                 </select>
               </label>
+              <div>
+                <label class="block text-left">
+                  <span class="text-gray-700">Cantidad</span></label
+                >
+                <input
+                  type="text"
+                  v-model="form.count"
+                  class="form-input mt-1 rounded-md shadow-sm"
+                />
+              </div>
               <div>
                 <label class="block text-left">
                   <span class="text-gray-700">Precio</span></label
@@ -126,12 +148,13 @@
                 value="Agregar"
               />
             </div>
-
-            <table class="flex flex-col justify-center">
+<br /><br />
+             <table class="w-full text-center">
               <thead>
                 <tr>
                   <th class="border px-4 py-2">Tratamiento</th>
-                  <th class="border md-table-cell px-4 py-2">Costo</th>
+                  <th class="border md-table-cell px-4 py-2">Cantidad</th>
+                  <th class="border d-table-cell px-4 py-2">Costo Unitario</th>
                   <th class="border px-4 py-2" colspan="3">Acciones</th>
                 </tr>
               </thead>
@@ -139,6 +162,9 @@
                 <tr v-for="lis in form.list" :key="lis.treatment_id">
                   <td class="border px-4 py-2">
                     {{ lis.treatment_name }}
+                  </td>
+                   <td class="border px-4 py-2">
+                    {{ lis.count }}
                   </td>
                   <td class="border px-4 py-2">
                     {{ lis.amount }}
@@ -164,9 +190,10 @@
                 </tr>
               </tbody>
               <tfoot>
-                <th>TOTAL</th>
+                <th>TOTAL:   {{ form.total }}</th>
                 <th></th>
-                <th>{{form.total}}</th>
+                <th></th>
+                <th></th>
               </tfoot>
             </table>
 
@@ -224,6 +251,7 @@ export default {
     patients: Array,
     doctors: Array,
     treatments: Array,
+    status: Array,
     appointment: Object,
     appTreat: Array,
     errors: Array,
@@ -233,10 +261,12 @@ export default {
       form: {
         patient_id: this.appointment.patient_id,
         doctor_id: this.appointment.user_id,
-        treatment_id:-1,
+        treatment_id:"",
         date: this.appointment.date,
         time: this.appointment.hour,
+        status_id: this.appointment.status_id,
         price: "",
+        count:"",
         total:this.appointment.total,
         list:this.appTreat,
       },
@@ -251,7 +281,13 @@ export default {
     showPrice() {
       let aux;
       aux= this.form.treatment_id.split("_");
-      this.form.price = aux[1];
+      if (aux[1] >= 0) {
+        this.form.price = aux[1];
+        this.form.count = 1;
+      } else {
+        this.form.count = "";
+        this.form.price = "";
+      }
     },
 
     agregar() {
@@ -264,15 +300,22 @@ export default {
       nombre =aux[2];
       precio =aux[1];
 
-      if (precio > 0) {
+      if (this.form.count>0 && precio > 0) {
         this.form.list.push({
           treatment_id: idtratamiento,
           treatment_name: nombre,
           amount: precio,
+          count:this.form.count
         });
-        this.form.total+=parseFloat(precio);
+         this.form.total += parseFloat(precio) * parseFloat(this.form.count);
         this.form.treatment_id=-1;
         this.form.price="";
+        this.form.count="";
+      }
+      else{
+        if(this.form.count<=0){
+          alert("Cantidad Inavlida");
+        }
       }
     },
     eliminar(text){
@@ -283,7 +326,9 @@ export default {
           break;
         }
       }
-      this.form.total-=parseFloat(this.form.list[cont].amount);
+     this.form.total -=
+        parseFloat(this.form.list[cont].amount) *
+        parseFloat(this.form.list[cont].count);
       this.form.list.splice(cont, 1);
       
     },

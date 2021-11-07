@@ -9,7 +9,7 @@
       <div class="md:col-span-4 mt-1">
         <div class="shadow bg-white md:rounded-md p-4">
           <div class="flex flex-col justify-center">
-            <table-details-appointment :appointment="appointment" />
+            <table-details-appointment :appointment="appointment" :appTrea="appTrea" />
             <div class="flex justify-center">
               <Link
                 class="
@@ -50,6 +50,7 @@ export default defineComponent({
   },
   props: {
     appointment: Object,
+    appTrea: Array,
   },
 });
 </script>
