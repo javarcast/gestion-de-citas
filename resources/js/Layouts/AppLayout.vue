@@ -7,7 +7,7 @@
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
@@ -23,7 +23,7 @@
                                     Inicio
                                 </jet-nav-link>
                             </div>
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div v-if="$page.props.user.rol_id===1" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <jet-nav-link :href="route('usuarios.index')" :active="route().current('usuarios.*')">
                                     Usuarios
                                 </jet-nav-link>
@@ -31,6 +31,16 @@
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <jet-nav-link :href="route('pacientes.index')" :active="route().current('pacientes.*')">
                                     Pacientes
+                                </jet-nav-link>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('calculadora')" :active="route().current('calculadora')">
+                                    Calculadora
+                                </jet-nav-link>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('citas.index')" :active="route().current('citas.*')">
+                                    Citas
                                 </jet-nav-link>
                             </div>
                         </div>
@@ -96,9 +106,18 @@
                         <jet-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                             Inicio
                         </jet-responsive-nav-link>
-                        <jet-nav-link :href="route('usuarios.index')" :active="route().current('usuarios.*')">
+                        <jet-nav-link v-if="$page.props.user.rol_id===1" :href="route('usuarios.index')" :active="route().current('usuarios.*')">
                             Usuarios
                         </jet-nav-link>
+                        <jet-responsive-nav-link :href="route('pacientes.index')" :active="route().current('pacientes.*')">
+                            Pacientes
+                        </jet-responsive-nav-link>
+                        <jet-responsive-nav-link :href="route('calculadora')" :active="route().current('calculadora')">
+                            Calculadora
+                        </jet-responsive-nav-link>
+                        <jet-responsive-nav-link :href="route('citas.index')" :active="route().current('citas.*')">
+                            Citas
+                        </jet-responsive-nav-link>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -132,17 +151,14 @@
 
             <!-- Page Heading -->
             <header class="bg-white shadow" v-if="$slots.header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-full mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header"></slot>
                 </div>
             </header>
 
             <!-- Page Content -->
+            <notify-process v-if="$page.props.flash.status" :status="$page.props.flash.status"></notify-process>
             <main class="contenedor">
-                <notify-process v-if="$page.props.flash.status" :status="$page.props.flash.status"></notify-process>
-               <!-- <section class="menu">
-                    <h3>saluddksdfjsdfhdf</h3>
-                </section>-->
                 <slot></slot>
             </main>
         </div>

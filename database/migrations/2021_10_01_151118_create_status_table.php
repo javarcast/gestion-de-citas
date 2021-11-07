@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAppoimentTreatmentsTable extends Migration
+class CreateStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateAppoimentTreatmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('appoiment_treatments', function (Blueprint $table) {
+        Schema::create('status', function (Blueprint $table) {
             $table->id();
-            $table->double('amount');
-            $table->double('count');
-            $table->foreignId('treatment_id');
-            $table->foreignId('appointment_id');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateAppoimentTreatmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('appoiment_treatments');
+        Schema::dropIfExists('status');
     }
 }

@@ -27,4 +27,6 @@ Route::resource('citas', AppointmentController::class)
 Route::resource('usuarios', UserController::class)
     ->middleware('auth:sanctum');
 
+Route::get('calculadora', [PageController::class, 'calculator'])
+    ->middleware('auth:sanctum')->name('calculadora');
     

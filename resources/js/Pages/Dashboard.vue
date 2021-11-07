@@ -5,96 +5,86 @@
         Dashboard
       </h2>
     </template>
-    <div class="pb-12 pt-0 ">
-      <div class="max-w-7xl mx-auto sm:pr-0 lg:px-0">
-        <div class="lg:grid lg:grid-cols-5 lg:gap-2">
-          <div class="md:col-span-1 menu menuDashboard">
-            <div class="mt-20 flex flex-row justify-center">
-              <img id="iconoRol" src="/images/call.png" alt="img del rol" />
-              <p class="ml-2">Bienvenido Administrador</p>
-            </div>
-            <ul class="flex flex-col mt-5 ps-2">
-              <li class="m-3 mt-10">
-                <a href="#" class="text-white p-3 mb-2 sidebar-link">
-                  <i class="px-2 far fa-address-book text-light fa-lg mr-3"></i>
-                  Pacientes
-                </a>
-              </li>
-              <li class="m-3">
-                <a href="#" class="text-white p-3 mb-2 sidebar-link">
-                  <i
-                    class="px-2 fas fa-envelope-open-text text-light fa-lg mr-3"
-                  ></i
-                  >Citas
-                </a>
-              </li>
-              <li class="m-3">
-                <a href="#" class="text-white p-3 mb-2 sidebar-link">
-                  <i class="px-2 fas fa-users text-light fa-lg mr-3"></i
-                  >Doctores
-                </a>
-              </li>
-            </ul>
+    <dashboard-layout>
+      <div class="main__cards m-3 p-3">
+        <div class="card flex flex-col justify-around">
+          <i class="far fa-user fa-2x text-lightblue" aria-hidden="true"></i>
+          <div class="card_inner">
+            <p class="text-primary-p">Número de Pacientes</p>
+            <span class="font-bold text-title">{{ nPatients }}</span>
           </div>
-          <div class="md:col-span-4 mt-1">
-            <div class="flex flex-col ">
-              <div class="main__cards m-3 p-3">
-                <div class="card flex flex-col justify-around">
-                  <i
-                    class="far fa-user fa-2x text-lightblue"
-                    aria-hidden="true"
-                  ></i>
-                  <div class="card_inner">
-                    <p class="text-primary-p">Numero de Pacientes</p>
-                    <span class="font-bold text-title">{{nPatients}}</span>
-                  </div>
-                </div>
-                <div class="card flex flex-col justify-around">
-                  <i
-                    class="far fa-calendar-alt fa-2x text-red"
-                    aria-hidden="true"
-                  ></i>
-                  <div class="card_inner">
-                    <p class="text-primary-p">Numero de Citas</p>
-                    <span class="font-bold text-title">578</span>
-                  </div>
-                </div>
-                <div class="card flex flex-col justify-around">
-                  <i
-                    class="fas fa-user-md fa-2x text-green-600"
-                    aria-hidden="true"
-                  ></i>
-                  <div class="card_inner">
-                    <p class="text-primary-p">Numero de Odontólogos</p>
-                    <span class="font-bold text-title">{{nDentists}}</span>
-                  </div>
-                </div>
-              </div>
-              <div class="charts">
-                <div class="charts__left">
-                  <div class="charts__left__title flex items-center justify-between">
-                    <div	>
-                      <h1>Tratamientos Solicitados</h1>
-                      <p>Tratamientos más Solicitados</p>
-                    </div>
-                  </div>
-                  <apexchart width="500" type="bar" :options="options1" :series="series1"></apexchart>
-                </div>
-                <div class="charts__right">
-                  <div class="charts__right__title flex items-center justify-between">
-                    <div>
-                      <h1>Citas Por Día</h1>
-                      <p>Resumen Estadístico de Citas</p>
-                    </div>
-                  </div>
-                  <apexchart width="400" type="area" :options="options2" :series="series2"></apexchart>
-                </div>
-              </div>
-            </div>
+        </div>
+        <div class="card flex flex-col justify-around">
+          <i class="far fa-calendar-alt fa-2x text-red" aria-hidden="true"></i>
+          <div class="card_inner">
+            <p class="text-primary-p nCita">Número de Citas Registradas</p>
+            <span class="font-bold text-title">{{nPatients}}</span>
+          </div>
+        </div>
+        <div class="card flex flex-col justify-around">
+          <i class="fas fa-user-md fa-2x text-green-600" aria-hidden="true"></i>
+          <div class="card_inner">
+            <p class="text-primary-p">Número de Odontólogos</p>
+            <span class="font-bold text-title">{{ nDentists }}</span>
           </div>
         </div>
       </div>
-    </div>
+       <div class="flex flex-wrap justify-end items-center mb-4">
+            <div class="grid mr-2  ">
+              <span class="text-xs text-gray-400"> Fecha Inicio</span>
+              <input
+                :max="dateEnd"
+                type="date"
+                class="form-input rounded-md shadow-sm"
+                v-model="dateStart"
+              />
+            </div>
+            <div class="grid ">
+              <span class="text-xs text-gray-400"> Fecha Fin</span>
+              <input
+                type="date"
+                class="form-input rounded-md shadow-sm"
+                v-model="dateEnd"
+              />
+              
+            </div>
+            <button @click="searchDate" class="bg-blue-500
+                hover:bg-blue-700
+                md:h-1/2
+                rounded-md
+                text-white
+                font-bold
+                ml-2
+                py-2
+                mr-4
+                mt-4
+                px-4"><i class="fas fa-search"></i></button>
+          </div>
+      <div class="charts">
+        <div >
+          <area-charts
+            class=" w-full"
+            title="Tratamientos Solicitados"
+            subtitle="Tratamientos más Solicitados"
+            :names="st1n"
+            :values="st1v"
+            typecharts="area"
+          ></area-charts>
+        </div>
+        <div>
+          <bar-charts 
+          class=" w-full"
+            title="Citas Por Día"
+            subtitle="Resumen Estadístico de Citas"
+            :names="cpdn"
+            :values="cpdv"
+            typecharts="line">
+
+          </bar-charts>
+        </div>
+        
+      </div>
+    </dashboard-layout>
   </app-layout>
 </template>
 
@@ -102,54 +92,39 @@
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import VueApexCharts from "vue3-apexcharts";
+import DashboardLayout from "@/Layouts/DashboardLayout.vue";
+import AreaCharts from "@/Components/AreaCharts.vue";
+import BarCharts from  "@/Components/BarCharts.vue";
 
 export default defineComponent({
   components: {
     AppLayout,
-    VueApexCharts
-    
+    VueApexCharts,
+    DashboardLayout,
+    AreaCharts,
+    BarCharts,
   },
   props: {
-            nPatients: Number,
-            nDentists: Number
+    nPatients: Number,
+    nDentists: Number,
+    nAppointments: Number,
+    st1n: Array,
+    st1v: Array,
+    endDate: Date,
+    initDate: Date,
+    cpdv: Array,
+    cpdn: Array,
   },
-  data: function() {
+  data() {
     return {
-      options1: {
-        chart: {
-          id: 'vuechart-example'
-        },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-        },
-        stroke: {
-          curve: 'smooth',
-        },
-        
-      },
-      series1: [{
-        name: 'series-1',
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
-      }],
-      options2: {
-        chart: {
-          id: 'vuechart-example'
-        },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-        },
-        stroke: {
-          curve: 'smooth',
-        },
-        
-      },
-      series2: [{
-        name: 'series-1',
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
-      }]
+      dateStart: this.initDate,
+      dateEnd: this.endDate,
+    };
+  },
+  methods: {
+    searchDate(){
+      this.$inertia.get(this.route("dashboard", { dateStart: this.dateStart, dateEnd: this.dateEnd }));
     }
   }
 });
-
-
 </script>

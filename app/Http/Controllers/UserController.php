@@ -17,18 +17,16 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-    
+        
 
-        $users=DB::table('users')
-        ->select('id','name','address','phone_number','dni','email','password','rol_id')
-        ->where('name', 'LIKE', "%$request->q%")
+        $users = User::where('name', 'LIKE', "%$request->q%")
         ->orWhere('phone_number', 'LIKE', "%$request->q%")
-        ->orWhere('email', 'LIKE', "%$request->q%")
-        ->orWhere('dni', 'LIKE', "%$request->q%")
-        ->orWhere('rol_id', 'LIKE', "%$request->q%")->paginate(10);
+        ->orWhere('email', 'LIKE', "%$request->q%")->paginate(10);
 
-                               
-        return Inertia::render('User/Index',compact("users"));
+        
+            return Inertia::render('User/Index',compact("users"));
+                                  
+        
     }
 
     /**
@@ -52,8 +50,8 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'dni' => 'required|numeric',
-            'phone_number' => 'required|numeric',
+            'dni' => 'required|numeric|unique:users',
+            'phone_number' => 'required|numeric|digits:10',
             'address' => 'required',
             'email' => 'required|email|unique:users',
             'rol_id' => 'required|numeric|min:0',
@@ -67,7 +65,8 @@ class UserController extends Controller
         }
 
         $user = User::create($request->all());
-        return redirect()->route('usuarios.index');
+        $message = "Usuario ".$user->name." ha sido creado"; 
+        return redirect()->route('usuarios.index')->with('status',$message);
         /*return redirect()->route('usuarios.edit',$user->id)->with('status','Usuario Creado');*/
     }
 
@@ -79,8 +78,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        return Inertia::render('User/Show', compact('user'));
+        $usershow = User::findOrFail($id);
+        $usershow['rol'] = Rol::findOrFail($usershow->rol_id);
+        return Inertia::render('User/Show', compact('usershow'));
     }
 
     /**
@@ -92,8 +92,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $roles = Rol::get();
-        $user = User::findOrFail($id);
-        return Inertia::render('User/Edit', compact('user','roles'));
+        $usershow = User::findOrFail($id);
+        return Inertia::render('User/Edit', compact('usershow','roles'));
     }
 
     /**
@@ -109,7 +109,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'dni' => 'required|numeric',
-            'phone_number' => 'required|numeric',
+            'phone_number' => 'required|numeric|digits:10',
             'address' => 'required',
             'email' => 'required|email',
             'rol_id' => 'required|numeric|min:0',
@@ -127,8 +127,9 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
         $user->update($request->all());
-        return redirect()->route('usuarios.index');
-        /*return redirect()->route('usuarios.index')->with('status','Usuario Actualizado');*/
+        $message = "Usuario ".$user->name." ha sido Actualizado!!"; 
+        //return redirect()->route('usuarios.index');
+        return redirect()->route('usuarios.index')->with('status',$message);
     }
 
     /**
@@ -140,8 +141,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
+        $message = "Usuario ".$user->name." ha sido Eliminado!!";
         $user->delete();
-        return redirect()->route('usuarios.index');
-        /*return redirect()->route('usuarios.index')->with('status','Usuario Eliminado');*/
+        
+        //return redirect()->route('usuarios.index');
+        return redirect()->route('usuarios.index')->with('status',$message);
     }
 }

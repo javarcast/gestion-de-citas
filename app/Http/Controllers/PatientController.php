@@ -15,13 +15,11 @@ class PatientController extends Controller
      */
     public function index(request $request)
     {
-        $patients = DB::table('patients')
-        ->select('id','name','address','phone_number','dni')
-        ->where('name', 'LIKE', "%$request->q%")
-        ->orWhere('dni', 'LIKE', "%$request->q%")
-        ->orWhere('address', 'LIKE', "%$request->q%")
+   
+
+        $patients = Patient::where('name', 'LIKE', "%$request->q%")
         ->orWhere('phone_number', 'LIKE', "%$request->q%")
-        ->orderBy('id','ASC')->paginate(11);
+        ->orWhere('dni', 'LIKE', "%$request->q%")->paginate(11);
 
         return Inertia::render('Patient/Index',compact("patients"));
     }
@@ -46,12 +44,13 @@ class PatientController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'dni' => 'required|numeric',
-            'phone_number' => 'required|numeric',
+            'dni' => 'required|numeric|unique:patients',
+            'phone_number' => 'required|numeric|digits:10',
             'address' => 'required',
         ]);
         $patient = Patient::create($request->all());
-        return redirect()->route('pacientes.index');
+        $message = "Paciente ".$patient->name." ha sido creado"; 
+        return redirect()->route('pacientes.index')->with('status',$message);
     }
 
     /**
@@ -87,10 +86,11 @@ class PatientController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $patient = Patient::findOrFail($id);
         $request->validate([
             'name' => 'required',
             'dni' => 'required|numeric',
-            'phone_number' => 'required|numeric',
+            'phone_number' => 'required|numeric|digits:10',
             'address' => 'required'
 
         ]);
@@ -98,7 +98,8 @@ class PatientController extends Controller
 
         $patient = Patient::findOrFail($id);
         $patient->update($request->all());
-        return redirect()->route('pacientes.index');
+        $message = "Paciente ".$patient->name." ha sido Actualizado!"; 
+        return redirect()->route('pacientes.index')->with('status',$message);
     }
 
     /**
@@ -110,7 +111,8 @@ class PatientController extends Controller
     public function destroy($id)
     {
         $patient = Patient::findOrFail($id);
+        $message = "Paciente ".$patient->name." ha sido Eliminado!"; 
         $patient->delete();
-        return redirect()->route('pacientes.index');
+        return redirect()->route('pacientes.index')->with('status',$message);
     }
 }

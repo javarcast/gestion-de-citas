@@ -6,7 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
-
+use Illuminate\Support\Facades\URL;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -32,5 +32,6 @@ class AppServiceProvider extends ServiceProvider
 
 
         Paginator::useBootstrap();
+        URL::forceScheme('https');
     }
 }
