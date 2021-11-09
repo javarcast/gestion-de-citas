@@ -10,9 +10,17 @@
         <div class="shadow bg-white md:rounded-md p-4">
           <div class="flex justify-evenly">
             <input
+            v-if="$page.props.user.rol_id===1"
               type="text"
               class="form-input rounded-md shadow-sm"
-              placeholder="Buscar..."
+              placeholder="Buscar ..."
+              v-model="q"
+            />
+            <input
+            v-else
+              type="text"
+              class="form-input rounded-md shadow-sm"
+              placeholder="Buscar Paciente..."
               v-model="q"
             />
             <label class="flex items-center block text-left">
@@ -58,12 +66,16 @@ export default defineComponent({
     appointments: Array,
   },
   watch: {
+    fecha(fecha) {
+      let aux;
+      aux=this.q+"."+fecha;
+      this.$inertia.replace(this.route("citas.index", {aux}));
+    },
     q(valor) {
-      this.$inertia.replace(this.route("citas.index", {valor}));
-    },
-    fecha(valor) {
-      this.$inertia.replace(this.route("citas.index", {valor}));
-    },
+      let aux;
+      aux=valor+"."+this.fecha;
+      this.$inertia.replace(this.route("citas.index", {aux}));
+    }
   },
   data() {
     return {
