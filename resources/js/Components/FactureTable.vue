@@ -30,7 +30,37 @@
                     w-3/12
                   "
                 >
+                  Cantidad
+                </th>
+                <th
+                  scope="col"
+                  class="
+                    px-6
+                    py-3
+                    text-left text-xs
+                    font-medium
+                    text-gray-500
+                    uppercase
+                    tracking-wider
+                    w-3/12
+                  "
+                >
                   Precio
+                </th>
+                <th
+                  scope="col"
+                  class="
+                    px-6
+                    py-3
+                    text-left text-xs
+                    font-medium
+                    text-gray-500
+                    uppercase
+                    tracking-wider
+                    w-3/12
+                  "
+                >
+                  Total
                 </th>
               </tr>
             </thead>
@@ -44,14 +74,20 @@
                     </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-500">{{ treatment.count}}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
                   <div class="text-sm text-gray-500">${{ treatment.price}}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-500">${{ parseInt(treatment.count) * parseInt(treatment.price)}}</div>
                 </td>
               </tr>
 
             </tbody>
             <tfoot class="bg-gray-50">
                 <tr>
-                    <td scope="col"
+                    <td colspan="3" scope="col"
                   class="
                     px-6
                     py-3
@@ -60,9 +96,8 @@
                     text-gray-700
                     uppercase
                     tracking-wider
-                    w-9/12
                   ">Total</td>
-                    <td scope="col"
+                    <td  scope="col"
                   class="
                     px-6
                     py-3

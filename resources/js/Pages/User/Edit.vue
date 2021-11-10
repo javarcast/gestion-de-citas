@@ -149,7 +149,7 @@ export default {
       form: {
         name: this.usershow.name,
         dni: this.usershow.dni,
-        phone_number: this.usershow.phone_number,
+        phone_number: this.usershow.phone_number.replace(/[^0-9]/g, ''),
         address: this.usershow.address,
         email: this.usershow.email,
         rol_id: this.usershow.rol_id,

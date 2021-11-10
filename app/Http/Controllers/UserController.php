@@ -51,7 +51,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'dni' => 'required|numeric|unique:users',
-            'phone_number' => 'required|numeric|digits:10',
+            'phone_number' => 'required|numeric|digits_between:10,15',
             'address' => 'required',
             'email' => 'required|email|unique:users',
             'rol_id' => 'required|numeric|min:0',
@@ -109,7 +109,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'dni' => 'required|numeric',
-            'phone_number' => 'required|numeric|digits:10',
+            'phone_number' => 'required|numeric|digits_between:10,15',
             'address' => 'required',
             'email' => 'required|email',
             'rol_id' => 'required|numeric|min:0',
