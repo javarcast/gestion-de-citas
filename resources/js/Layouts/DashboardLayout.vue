@@ -3,9 +3,13 @@
     <div class="max-w-full mx-auto sm:pr-0 lg:px-0">
       <div class="lg:grid lg:grid-cols-5 lg:gap-2">
         <div class="md:col-span-1 menu menuDashboard">
-          <div class="mt-20 flex flex-row justify-center">
+          <div v-if="$page.props.user.rol_id===1" class="mt-20 flex flex-row justify-center">
             <img id="iconoRol" src="/images/call.png" alt="img del rol" />
             <p class="ml-2">Bienvenido Administrador</p>
+          </div>
+          <div v-else class="mt-20 flex flex-row justify-center">
+            <img id="iconoRol" src="/images/usuario.png" alt="img del rol" />
+            <p class="ml-2">Bienvenido Doctor</p>
           </div>
           <ul class="flex flex-col mt-5 ps-2">
             <li class="m-3 mt-10">

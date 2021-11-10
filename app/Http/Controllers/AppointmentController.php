@@ -22,17 +22,80 @@ class AppointmentController extends Controller
      */
     public function index(Request $request)
     {
-        $appointments=Appointment::join("users","users.id","=","appointments.user_id")
-        ->join("patients","patients.id","=","appointments.patient_id")
-        ->where('users.name', 'LIKE', "%$request->valor%")
-        ->orWhere('patients.name', 'LIKE', "%$request->valor%")
-        ->orWhere('patients.dni', 'LIKE', "%$request->valor%")
-        ->orWhere('appointments.date', 'LIKE', "%$request->valor%")
-        ->select('appointments.id','date','hour','users.name as doctor','patients.name as paciente')
-        ->paginate(7);
-
-
+        $myString = $request->aux;
+        $myArray = explode('.', $myString);
+        
+            if(count($myArray)>1){
+                if(auth()->user()->id!=1){
+                    //Es Doctor
+                    $appointments=Appointment::join("users","users.id","=","appointments.user_id")
+                    ->join("patients","patients.id","=","appointments.patient_id")
+                    ->where([
+                        ['users.id', '=', auth()->user()->id],
+                        ['patients.name', 'LIKE', "%$myArray[0]%"],
+                        ['appointments.date', 'LIKE', "%$myArray[1]%"],
+                    ])
+                    ->orWhere([
+                        ['users.id', '=', auth()->user()->id],
+                        ['patients.dni', 'LIKE', "%$myArray[0]%"],
+                        ['appointments.date', 'LIKE', "%$myArray[1]%"],
+                    ])
+                    ->select('appointments.id','date','hour','users.name as doctor','patients.name as paciente')
+                    ->paginate(7);
+                }
+                else{
+                    //Es Admin
+                    $appointments=Appointment::join("users","users.id","=","appointments.user_id")
+                    ->join("patients","patients.id","=","appointments.patient_id")
+                    ->where([
+                        ['patients.name', 'LIKE', "%$myArray[0]%"],
+                        ['appointments.date', 'LIKE', "%$myArray[1]%"],
+                    ])
+                    ->orWhere([
+                        ['patients.dni', 'LIKE', "%$myArray[0]%"],
+                        ['appointments.date', 'LIKE', "%$myArray[1]%"],
+                    ])
+                    ->orWhere([
+                        ['users.name', 'LIKE', "%$myArray[0]%"],
+                        ['appointments.date', 'LIKE', "%$myArray[1]%"],
+                    ])
+                    ->orWhere([
+                        ['users.dni', 'LIKE', "%$myArray[0]%"],
+                        ['appointments.date', 'LIKE', "%$myArray[1]%"],
+                    ])
+                    ->select('appointments.id','date','hour','users.name as doctor','patients.name as paciente')
+                    ->paginate(7);
+                }
+                
+            }
+            else{
+                if(auth()->user()->id!=1){
+                    //Es doctor
+                    $appointments=Appointment::join("users","users.id","=","appointments.user_id")
+                    ->join("patients","patients.id","=","appointments.patient_id")
+                    ->where([
+                        ['users.id', '=', auth()->user()->id]
+                    ])
+                    ->select('appointments.id','date','hour','users.name as doctor','patients.name as paciente')
+                    ->paginate(7);
+                }
+                else{
+                    //es Admin
+                    
+                    $appointments=Appointment::join("users","users.id","=","appointments.user_id")
+                    ->join("patients","patients.id","=","appointments.patient_id")
+                    ->select('appointments.id','date','hour','users.name as doctor','patients.name as paciente')
+                    ->paginate(7);
+                }
+                
+            }
+            
+        
+      
+       
         return Inertia::render('Appointment/Index',compact("appointments"));
+
+        
     }
 
     /**
@@ -72,14 +135,18 @@ class AppointmentController extends Controller
             'list' => 'required'
         ]);
 
-        //PENDIENTE VALIDAR UNA SOLA CITA A LA MISMA HORA U FECHA DEL DOCTOR
-       /* $cita = Appointment::
+        $cita=0;
+        $cita = Appointment::
         where('user_id','=',$request->get('doctor_id'))
         ->whereDate('date',$request->get('date'))
         ->whereTime('hour',$request->get('time'))
-        ->select(count('user_id'))
-        ->get();*/
-        
+        ->select('user_id')
+        ->get();
+        if(count($cita)>0){
+            $message="El doctor ya tiene una cita asignada en ese horario";
+            return redirect()->back()->with('status',$message);
+        }
+        else{
             $appointment = New Appointment();
             $appointment->date=$request->get('date');
             $appointment->hour=$request->get('time');
@@ -105,6 +172,7 @@ class AppointmentController extends Controller
             }
             $message = "La cita ha sido creado"; 
             return redirect()->route('citas.index')->with('status',$message);
+        }
        
     }
 
@@ -178,38 +246,51 @@ class AppointmentController extends Controller
             'list' => 'required'
         ]);
 
-        $appointment = Appointment::findOrFail($id);
-        $appointment->date=$request->get('date');
-        $appointment->hour=$request->get('time');
-        $appointment->status_id=$request->get('status_id');
-        $appointment->patient_id=$request->get('patient_id');
-        $appointment->user_id=$request->get('doctor_id');
-        $appointment->total=$request->get('total');
-        $appointment->update();
-
-        $aux=$request->get('list');
-
-        $appointmentTrea=AppoimentTreatments::
-        where("appointment_id","=",$id)
+        $cita=0;
+        $cita = Appointment::
+        where('user_id','=',$request->get('doctor_id'))
+        ->whereDate('date',$request->get('date'))
+        ->whereTime('hour',$request->get('time'))
+        ->select('user_id')
         ->get();
-
-        $appointmentTrea->each->delete();
-
-        $cont=0;
-        while ($cont < count($aux)) {
-            if($aux[$cont]['count']>0){
-                $appointmentTrea= new AppoimentTreatments();
-                $appointmentTrea->appointment_id=$appointment->id;
-                $appointmentTrea->treatment_id=$aux[$cont]['treatment_id'];
-                $appointmentTrea->amount=$aux[$cont]['amount'];
-                $appointmentTrea->count=$aux[$cont]['count'];
-                $appointmentTrea->save();
-            }
-            $cont++;
+        if(count($cita)>0){
+            $message="El doctor ya tiene una cita asignada en ese horario";
+            return redirect()->back()->with('status',$message);
         }
-        $message = "La Cita ha sido Actualizada!!"; 
-        //return redirect()->route('usuarios.index');
-        return redirect()->route('citas.index')->with('status',$message);
+        else{
+            $appointment = Appointment::findOrFail($id);
+            $appointment->date=$request->get('date');
+            $appointment->hour=$request->get('time');
+            $appointment->status_id=$request->get('status_id');
+            $appointment->patient_id=$request->get('patient_id');
+            $appointment->user_id=$request->get('doctor_id');
+            $appointment->total=$request->get('total');
+            $appointment->update();
+
+            $aux=$request->get('list');
+
+            $appointmentTrea=AppoimentTreatments::
+            where("appointment_id","=",$id)
+            ->get();
+
+            $appointmentTrea->each->delete();
+
+            $cont=0;
+            while ($cont < count($aux)) {
+                if($aux[$cont]['count']>0){
+                    $appointmentTrea= new AppoimentTreatments();
+                    $appointmentTrea->appointment_id=$appointment->id;
+                    $appointmentTrea->treatment_id=$aux[$cont]['treatment_id'];
+                    $appointmentTrea->amount=$aux[$cont]['amount'];
+                    $appointmentTrea->count=$aux[$cont]['count'];
+                    $appointmentTrea->save();
+                }
+                $cont++;
+            }
+            $message = "La Cita ha sido Actualizada!!"; 
+            return redirect()->route('citas.index')->with('status',$message);
+        }
+        
     }
 
     /**
