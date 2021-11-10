@@ -135,7 +135,6 @@ class AppointmentController extends Controller
             'list' => 'required'
         ]);
 
-        //PENDIENTE VALIDAR UNA SOLA CITA A LA MISMA HORA U FECHA DEL DOCTOR
         $cita=0;
         $cita = Appointment::
         where('user_id','=',$request->get('doctor_id'))
